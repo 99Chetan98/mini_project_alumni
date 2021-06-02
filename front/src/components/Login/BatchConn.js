@@ -3,9 +3,21 @@ import Header from './NavHeader';
 import {useEffect,useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import img from '../../img/top.jpg';
+import loading from '../../img/ezgif-2-6d0b072c3d3f.gif';
+
 const BatchConn = () => {
     const [userdata,setuserdata]=useState([]);
     const [condata,setcondata]=useState([]);
+    const [dispaly,setdisplay]=useState("content");
+    const [load,setload]=useState('content');
+    const [trure,settrure]=useState('false');
+    const [sent,setsent]=useState([]
+
+            
+    );
+    const [mate,setmate]=useState([]);
+    const [arr,setarr]=useState([]);
+    const [limit,setlimit]=useState(18);
     const history=useHistory();
     const finbatch=async()=>{
         try{
@@ -19,7 +31,9 @@ const BatchConn = () => {
                
             });
             const data=await res.json();
+            
             setuserdata(data);
+
                    
         }catch(e){
             console.log(e);
@@ -28,18 +42,10 @@ const BatchConn = () => {
         
     }
 
-    const find=()=>{
-            console.log("finding");
-    }
-
-
-
-
     useEffect(() => {
             finbatch();
+            setInterval(function(){setdisplay("none"); },1000)
     },[])
-
-console.log(userdata)
 
         useEffect(() => {
             fetch("/find_batchmate",{
@@ -50,47 +56,238 @@ console.log(userdata)
                   },
                   body:JSON.stringify(
                     {
-                        year:userdata.passingYear
+                        year:userdata.passingYear,
+                        no:limit
                     }
                   )
             }).then(res=>res.json())
             .then(results=>{
                 setcondata(results.user);
-                
-                
+                setmate(userdata.matereq)
+             
+              
+                    setarr(userdata.conreq);
             }).catch(()=>{
                 
             })
 
+        },[userdata,limit])
+
+        
+       const ToConnect=(id)=>{
+        setsent([...sent,id]);
+          fetch(`/put_con/${userdata._id}`,{
+              method:"POST",
+              headers:{
+                'Content-Type':'application/json; charset=utf-8',
+                "Access-Control-Allow-Origin": "*",
+              },
+              body:JSON.stringify(
+                {
+                   id
+                })
+          }).then((res)=>{
+              console.log(res.json);
+          }).catch(e=>{
+              console.log(e);
+          })
+        }
+
+      
+    
+
+            window.addEventListener('scroll', ()=>{
+                const {scrollHeight,scrollTop,clientHeight}=document.documentElement;
+                const userheight=scrollTop+clientHeight+10;
+               
+                if(userheight>scrollHeight){
+                   setTimeout( setlimit(limit+9),1000);
+             
+                }
+
+        });
+        const [visible,setvisible]=useState({
+            find:"inherit",
+            connreq:"none",
+            matereq:"none",
+            classA:"activo"
+            
+        })
+        const Sento=(num)=>{
+                if(num==1){
+                    setvisible({
+                        find:"inherit",
+                        connreq:"none",
+                        matereq:"none",
+                        classA:"activo",
+                        classB:"",
+                        classC:""
+                    })
+                }
+                else if(num==2){
+                    setvisible({
+                        find:"none",
+                        connreq:"none",
+                        matereq:"inherit",
+                        classA:"",
+                        classB:"activo",
+                        classC:""
+                    })
+                }
+                else if(num==3){
+                    setvisible({
+                        find:"none",
+                        connreq:"inherit",
+                        matereq:"none",
+                        classA:"",
+                        classC:"activo",
+                        classB:""
+                    })
+                }
 
 
-
-        },[userdata])
-        console.log(condata)
+        }
+console.log(mate)
+     
+    
     return (
         <div>
                     <Header/>
-                <div className="container-fluid find">
-                    <div className="row">
+                <div className="preload" style={{display:dispaly}}><div className="boxpre"></div></div>
+                <div className="container find" style={{display:visible.find}}>
+                    <div className="row d-flex justify-content-center">
+
                         {
                             condata.map((e,key)=>{
-                                if(e.name!=userdata.name){
-                                    return(
+                                var text="connect"
+                                for(let i in arr)
+                                {
+                                        if(e._id===arr[i].reqc){
 
-                                        <div key={key}className="col-sm-2">
+                                            var temp=0;
+                                            
+                                        }
+                                }
+                                for(let i in sent)
+                                {
+                                    if(sent[i]==e._id){
+                                        var tru="true";
+                                        var text="pending"
+                                    }
+
+                                }
+
+                                if(e.name!==userdata.name && e.name!==null && temp!=0 ){
+                                   
+                                    return(
+                                             <>   
+                                        <div key={key}className="col-md-3 col-sm-2">
                                        <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
-                                        <h4>{e.name}</h4>
-                                        <h6>{e.dept}</h6>
-                                        <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary ">Connect</button></div>
+                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
+                                        <h6>{e.dept} | {e.passingYear}</h6>
+                                        <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" onClick={()=>ToConnect(e._id)} disabled={tru}>{text}</button></div>
                                          </div>
-                                    )}
+                                            {/* //onClick={()=>ToConnect(e._id,key)}// */}
+                                         </>
+                                    )
+                                        
+                                }
                             })
-                        }
+                            }
+
+
 
 
                     </div>
 
+
+
+                    <div className="d-flex justify-content-center" style={{display:load}}><img src={loading} style={{height:"90px",display:load}} alt="loading"/></div>
+
                 </div>
+                {/* PENDING */}
+                <div className="container find" style={{display:visible.matereq}}>
+                    <div className="row d-flex justify-content-center">
+
+                   
+
+                                {
+                                    condata.map((e,key)=>{
+                                        for(var i in mate){
+                                            if(e._id===mate[i].mateid){
+
+                                                var temp=0;
+                                                
+                                            }
+                                        }
+                                        if(temp===0){
+                                        return(
+
+                                            <>   
+                                            <div key={key}className="col-md-3 col-sm-2">
+                                           <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
+                                            <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
+                                            <h6>{e.dept} | {e.passingYear}</h6>
+                                            <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" >Accept</button></div>
+                                             </div>
+                                                {/* //onClick={()=>ToConnect(e._id,key)}// */}
+                                             </>
+
+                                        )
+                                        }
+                                    })
+                                }
+
+
+                    </div>
+                    </div>
+                {/* PENDING */}
+                <div className="container find" style={{display:visible.connreq}}>
+                    <div className="row d-flex justify-content-center">
+
+                   
+
+                                {
+                                    condata.map((e,key)=>{
+                                        for(var i in arr){
+                                            if(e._id===arr[i].reqc){
+
+                                                var temp=0;
+                                                
+                                            }
+                                        }
+                                        if(temp==0){
+                                        return(
+
+                                            <>   
+                                            <div key={key}className="col-md-3 col-sm-2">
+                                           <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
+                                            <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
+                                            <h6>{e.dept} | {e.passingYear}</h6>
+                                            <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" disabled>Pending</button></div>
+                                             </div>
+                                                {/* //onClick={()=>ToConnect(e._id,key)}// */}
+                                             </>
+
+                                        )
+                                        }
+                                    })
+                                }
+
+
+                    </div>
+                    </div>
+                <div className="ulbox">
+                                <ul>
+                                    <li className={visible.classA} onClick={()=>Sento(1)}>Suggestion</li>
+                                    <hr style={{margin:"0px"}}></hr>
+                                    <li className={visible.classB} onClick={()=>Sento(2)}>Connection Request</li>
+                                    <hr style={{margin:"0px"}}></hr>
+                                    <li className={visible.classC} onClick={()=>Sento(3)}>Pending Request</li>
+                                    <hr style={{margin:"0px"}}></hr>
+                                    <li  onClick={()=>Sento(3)}>Your Mate</li>
+                                </ul>
+                        </div>
         </div>
     )
 }

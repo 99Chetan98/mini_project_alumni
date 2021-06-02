@@ -2,10 +2,11 @@ import React,{useEffect, useState} from 'react';
 import './style.css';
 import img from '../../img/top.jpg';
 import logo from '../../img/University-Logo.png';
-import { NavLink } from "react-router-dom";
+import { NavLink ,useHistory} from "react-router-dom";
 const NavHeader = () => {
     const [search,setsearch]=useState("");
     const [scale,setscale]=useState("scale(0)");
+    const history=useHistory();
     const [user,setuser]=useState([]);
     const SetInput=(e)=>{
 
@@ -96,7 +97,7 @@ const NavHeader = () => {
                     {
                         user.map(e=>{
                             return(
-                                <div className="d-flex se">
+                                <div className="d-flex se" onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>
                                 <img src={img} alt="" id="searchimg"/>
                                    <li>{e.name}</li>
                                 </div>

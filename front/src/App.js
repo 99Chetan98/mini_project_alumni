@@ -12,7 +12,7 @@ import Profile from './components/Login/Profile';
 
 import Find from  './components/Login/BatchConn';
 import Logout from  './components/Logout';
-
+import  Batch_Profile from  './components/Login/Batch_Profile';
 
 const App=()=>{
   return(
@@ -57,7 +57,11 @@ const App=()=>{
             <Route exact path="/Logout">
                     <Logout/>
             </Route>
-        
+            
+            <Route exact path="/UserDash/Batch_Profile">
+                    <Batch_Profile/>
+            </Route>
+
 
     </>
     

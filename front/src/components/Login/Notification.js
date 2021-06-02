@@ -4,7 +4,7 @@ const Notification = () => {
     return (
         <div>
              <Header/>
-            <h1>Notificatiovhgvn</h1>
+            <h1>Notificavhgvn</h1>
         </div>
     )
 }

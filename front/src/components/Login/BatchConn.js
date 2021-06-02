@@ -147,7 +147,7 @@ const BatchConn = () => {
 
 
         }
-console.log(mate)
+
      
     
     return (
@@ -224,7 +224,7 @@ console.log(mate)
                                         return(
 
                                             <>   
-                                            <div key={key}className="col-md-3 col-sm-2">
+                                            <div key={key} className="col-md-3 col-sm-2">
                                            <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
                                             <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
                                             <h6>{e.dept} | {e.passingYear}</h6>
@@ -260,7 +260,7 @@ console.log(mate)
                                         return(
 
                                             <>   
-                                            <div key={key}className="col-md-3 col-sm-2">
+                                            <div key={key} className="col-md-3 col-sm-2">
                                            <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
                                             <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
                                             <h6>{e.dept} | {e.passingYear}</h6>

@@ -2,6 +2,8 @@ import React,{useEffect, useState} from 'react';
 import './style.css';
 import img from '../../img/top.jpg';
 import logo from '../../img/University-Logo.png';
+
+import log from '../../img/default.jpeg';
 import { NavLink ,useHistory} from "react-router-dom";
 const NavHeader = () => {
     const [search,setsearch]=useState("");
@@ -72,7 +74,7 @@ const NavHeader = () => {
             <i className="fa fa-search" aria-hidden="true"></i>
             <input type="text" onChange={SetInput} value={search} className="usearch" name="search" placeholder="Search" autoComplete="off" required/>
 
-            <img src={img} alt="" id="userprof"/>
+            <img src={log} alt="" id="userprof"/>
 
             <div className="boxmenu">
                
@@ -98,7 +100,7 @@ const NavHeader = () => {
                         user.map(e=>{
                             return(
                                 <div className="d-flex se" onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>
-                                <img src={img} alt="" id="searchimg"/>
+                                <img src={log} alt="" id="searchimg"/>
                                    <li>{e.name}</li>
                                 </div>
                             

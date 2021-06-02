@@ -87,7 +87,7 @@ const Head=()=>{
                   <li><NavLink  to="/Login">Login</NavLink></li>
                   <li><NavLink  to="/Register">Register</NavLink></li>
                   <li><NavLink  to="/Regi">Gallery</NavLink></li>
-                  <li><a href="https://www.jnec.org/">Jnec</a></li>
+                  
               </ul>
           </div>
         </div>

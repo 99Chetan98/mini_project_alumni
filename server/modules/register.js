@@ -73,25 +73,11 @@ const regi_schema=new mongoose.Schema({
     conreq:[
         {
             reqc:{
-                type:String,
-                required:true
+                type:String
             }
             ,
             status:{
-                type:Number,
-                required:true
-            }
-        }
-    ],
-    matereq:[
-        {
-            mateid:{
-                type:String,
-                required:true
-            },
-            status:{
-                type:Number,
-                required:true
+                type:Number
             }
         }
     ]

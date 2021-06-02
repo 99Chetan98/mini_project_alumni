@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './NavHeader';
 import {useEffect,useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import img from '../../img/top.jpg';
+    import img from '../../img/default.jpeg';
 import loading from '../../img/ezgif-2-6d0b072c3d3f.gif';
 
 const BatchConn = () => {
@@ -93,7 +93,7 @@ const BatchConn = () => {
           })
         }
 
-      
+
     
 
             window.addEventListener('scroll', ()=>{

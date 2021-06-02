@@ -13,6 +13,8 @@ import Profile from './components/Login/Profile';
 import Find from  './components/Login/BatchConn';
 import Logout from  './components/Logout';
 import  Batch_Profile from  './components/Login/Batch_Profile';
+import  Pending from  './components/Login/penReq';
+import  Mates from  './components/Login/Mates';
 
 const App=()=>{
   return(
@@ -61,7 +63,12 @@ const App=()=>{
             <Route exact path="/UserDash/Batch_Profile">
                     <Batch_Profile/>
             </Route>
-
+            <Route exact path="/UserDash/Notification/pending_request">
+                    <Pending/>
+            </Route>
+            <Route exact path="/UserDash/Notification/your_mates">
+                    <Mates/>
+            </Route>
 
     </>
     

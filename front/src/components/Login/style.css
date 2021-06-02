@@ -409,6 +409,9 @@ border-radius: 18px;
 .ulbox ul li:hover{
 background: #82561c24;
 }
-.activo{
+.activo,.getact{
 background: #82561c24;
+}
+a{
+  text-decoration: none!important;
 }

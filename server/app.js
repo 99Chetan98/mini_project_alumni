@@ -10,6 +10,7 @@ require("./DB/conn.js");
 const authen=require("./middleware/Auth");
 
 const User=require("./modules/register");
+const { findOne } = require("./modules/register");
 app.use(express.json());
 app.use(cookieParser())
 app.get("/",(req,res)=>{
@@ -107,7 +108,7 @@ app.get("/userlog",authen,(req,res)=>{
 
 app.post("/find",(req,res)=>{
 
-      
+            
             let userpattern=new RegExp("^"+req.body.search);
             User.find({name:{$regex:userpattern}})
             .select("_id name")
@@ -125,7 +126,7 @@ app.post("/find_batchmate",(req,res)=>{
 
       
   no=req.body.no;
-    User.find().limit( no )
+    User.find()
     .select("_id name dept passingYear")
     .then(user=>{
         res.json({user})
@@ -158,16 +159,36 @@ app.get("/find/:id",(req,res)=>{
 app.post("/put_con/:id",async(req,res)=>{
     const _id=req.params.id;
     const reqid=req.body.id;
+
     const data=await User.findOne({_id});
     const conre=data.conreq.concat({reqc:reqid,status:0});
     const upda=await User.updateOne({_id},{$set:{conreq:conre}});
+
     const requser=await User.findOne({_id:reqid});
-    const matre=requser.matereq.concat({mateid:_id,status:0});
-    const updat=await User.updateOne({_id:reqid},{$set:{matereq:matre}});
+    const matre=requser.conreq.concat({reqc:_id,status:1});;
+    const updat=await User.updateOne({_id:reqid},{$set:{conreq:matre}});
 
     if(updat && upda){
         res.status(200);
     }
+})
+
+app.post("/bemates",async(req,res)=>{
+    const userid=req.body.user;
+    const mateid=req.body.mateid;
+
+    const userdata=await User.findOne({_id:userid});
+
+    const updateU=await User.updateOne({_id:userid,"conreq.reqc":mateid},{$set:{"conreq.$.status":2}});
+
+
+    const matedata=await User.findOne({_id:mateid});
+    const updateM=await User.updateOne({_id:mateid,"conreq.reqc":userid},{$set:{"conreq.$.status":2}});
+
+    if(updateU && updateM){
+        res.status(200);
+    }
+
 })
 
 app.listen(8000,()=>{

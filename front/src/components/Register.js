@@ -108,7 +108,7 @@ const postData=async(e)=>{
             if(data.status===422){
               window.alert("invalid");
             }else{
-
+              window.alert("Succesfully Register");
              history.push("/Login");
             }
 

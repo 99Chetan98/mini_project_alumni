@@ -53,6 +53,12 @@ const ConReq = (props) => {
             dis:""
         })
     }
+    else if(props.opid==2){
+        setOpe({
+            text:"View Profile",
+            dis:""
+        })
+    }
         try{
             const res=await fetch(`/find/${props.id}`,{
                 method:"GET",
@@ -92,6 +98,10 @@ const ConReq = (props) => {
                 console.log(e);
             })
         }
+        else if(id==2){
+            history.push(`/UserDash/Batch_Profile?uid=${uid}`)
+        }
+
         
     }
     

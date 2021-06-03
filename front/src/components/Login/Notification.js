@@ -56,7 +56,7 @@ const Notification = () => {
                                 else{
                                     return(
                                         <>
-                                        <h6><em>no data found</em></h6>
+                                        
                                         </>
                                     )
                                 }

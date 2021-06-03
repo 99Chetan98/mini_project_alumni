@@ -4,8 +4,50 @@ import {useEffect,useState} from 'react';
 import {useHistory,useLocation} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import img from '../../img/top.jpg';
+import { compareSync } from 'bcryptjs';
 const Batch_Profile = ({ id }) => {
- 
+    const [sta,setsta]=useState({
+        status:"",
+        text:"Connect"
+    });
+    const [userdata,setuserdata]=useState([]);
+    const [Ope,setOpe]=useState({
+        text:"",
+        dis:""
+    })
+    const finbatch=async()=>{
+        try{
+            const res=await fetch("/userlog",{
+                method:"GET",
+               
+                headers:{
+                Accept:"application/json",
+                'Content-Type':'application/json'
+                },
+               
+            });
+            const data=await res.json();
+            
+            setuserdata(data);
+
+                   
+        }catch(e){
+            console.log(e);
+            history.push('/Login');
+        }
+        
+    }
+
+    useEffect(() => {
+            finbatch();
+
+    },[])
+
+
+
+
+
+
   const [user, setuser] = useState([]);
     const history=useHistory();
   const search = useLocation().search;
@@ -23,13 +65,48 @@ const Batch_Profile = ({ id }) => {
             });
             const data=await res.json();
             setuser(data);
+
                    
         }catch(e){
             console.log(e);
             history.push('/Login');
         }
+
+
+
+   
+
+
+
+
+
+
     },[name]);
-   console.log(user.name);
+
+    useEffect(() => {
+       
+       for(var i in userdata.conreq)
+        {
+            if(userdata.conreq[i].reqc==user._id)
+                if(userdata.conreq[i].status=="2"){
+                    setsta({text:"Mates"});
+                }
+              else if(userdata.conreq[i].status=="0"){
+                    setsta({text:"Pending"});
+                }
+                else if(userdata.conreq[i].status=="1"){
+                    setsta({text:"Accept"});
+                }
+               else if(userdata.conreq[i].status==undefined){
+                    setsta({text:"Connect"});
+                }
+
+
+        }
+      
+    },[name,user])
+
+   console.log(userdata.conreq);
     return (
         <div>
                     <Header/>
@@ -66,7 +143,7 @@ const Batch_Profile = ({ id }) => {
                     
                     </div>
                     <hr></hr>
-                    <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary conset" style={{marginBottom:"10px"}}>Connect</button></div>
+                    <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary conset" style={{marginBottom:"10px"}}>{sta.text}</button></div>
                 </div>
 
             </div>

@@ -111,7 +111,7 @@ const ConReq = (props) => {
 
                 
                                        <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
-                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}`);}}>{user.name}</h4>
+                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}&&status=${props.opid}`);}}>{user.name}</h4>
                                         <h6>{user.dept} | {user.passingYear}</h6>
                                         <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" onClick={()=>Bemate(props.opid,user._id)} disabled={Ope.dis}>{Ope.text}</button></div>
                                        

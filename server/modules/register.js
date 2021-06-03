@@ -101,6 +101,6 @@ regi_schema.pre('save',async function(next){
     }
     next();
 });
-const User=mongoose.model("User",regi_schema);
+const User=mongoose.model("Alumni Registration",regi_schema);
 
 module.exports=User;

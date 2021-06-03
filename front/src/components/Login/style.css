@@ -415,11 +415,3 @@ background: #82561c24;
 a{
   text-decoration: none!important;
 }
-.find h6:nth-child(n+1){
-  display: none;
-}
-.find h6:nth-child(1){
-  display: block;
-  margin-top: 50px;
-  color: #4848487d;
-}

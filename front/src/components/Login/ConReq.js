@@ -23,8 +23,26 @@ const ConReq = (props) => {
                
             });
             const data=await res.json();
-            
             setuserdata(data);
+            if(props.opid==1){
+                setOpe({
+                    text:"pending",
+                    dis:"true"
+                      })
+                }
+                else if(props.opid==0){
+                    setOpe({
+                        text:"Accept",
+                        dis:""
+                    })
+                }
+                else if(props.opid==2){
+                    setOpe({
+                        text:"View Profile",
+                        dis:""
+                    })
+                }
+           
 
                    
         }catch(e){
@@ -41,24 +59,7 @@ const ConReq = (props) => {
 
     
     useEffect(async() => {
-        if(props.opid==1){
-            setOpe({
-                text:"pending",
-                dis:"true"
-            })
-    }
-    else if(props.opid==0){
-        setOpe({
-            text:"Accept",
-            dis:""
-        })
-    }
-    else if(props.opid==2){
-        setOpe({
-            text:"View Profile",
-            dis:""
-        })
-    }
+
         try{
             const res=await fetch(`/find/${props.id}`,{
                 method:"GET",
@@ -78,7 +79,7 @@ const ConReq = (props) => {
            
         }
     },[]);
-    console.log(userdata)
+    
     const Bemate=(id,uid)=>{
         if(id==0){
             fetch(`/bemates`,{
@@ -111,9 +112,10 @@ const ConReq = (props) => {
 
                 
                                        <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
-                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}&&status=${props.opid}`);}}>{user.name}</h4>
+                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}&status=${props.opid}`);}}>{user.name}</h4>
                                         <h6>{user.dept} | {user.passingYear}</h6>
-                                        <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" onClick={()=>Bemate(props.opid,user._id)} disabled={Ope.dis}>{Ope.text}</button></div>
+                                        
+                                        <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" onClick={()=>Bemate(props.opid,user._id)} disabled={props.condition.but}>{props.condition.text}</button></div>
                                        
 </div>
 

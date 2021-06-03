@@ -415,3 +415,39 @@ background: #82561c24;
 a{
   text-decoration: none!important;
 }
+#Mates{
+  display: none!important;
+}
+.loading{
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  position: fixed;
+  background: rgb(249, 250, 252)!important;
+  
+}
+.stick{
+  height: 2px;
+  position: relative;
+ ;
+ width: 100%;
+  top: 61px;
+  background: #fff394;
+  animation: extend 1.5s infinite ease-in-out;
+}
+@keyframes extend {
+  0%{
+   
+    width: 0%;
+    background: #fd7a00;
+    transform-origin: left;
+  }50%{
+    width: 80%;
+   
+    background: #ffee02;
+    
+  }
+  90%{
+    width: 100%;
+  }
+}

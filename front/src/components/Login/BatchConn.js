@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from './NavHeader';
 import {useEffect,useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory,NavLink} from 'react-router-dom';
     import img from '../../img/default.jpeg';
 import loading from '../../img/ezgif-2-6d0b072c3d3f.gif';
+import Loader from './Loader';
 
 const BatchConn = () => {
     const [userdata,setuserdata]=useState([]);
@@ -153,7 +154,7 @@ const BatchConn = () => {
     return (
         <div>
                     <Header/>
-                <div className="preload" style={{display:dispaly}}><div className="boxpre"></div></div>
+                        <Loader timing={1000}/>
                 <div className="container find" style={{display:visible.find}}>
                     <div className="row d-flex justify-content-center">
 
@@ -181,7 +182,7 @@ const BatchConn = () => {
                                    
                                     return(
                                              <>   
-                                        <div key={key}className="col-md-3 col-sm-2">
+                                        <div key={key} className="col-md-3 col-sm-2">
                                        <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
                                         <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
                                         <h6>{e.dept} | {e.passingYear}</h6>
@@ -205,7 +206,17 @@ const BatchConn = () => {
                     <div className="d-flex justify-content-center" style={{display:load}}><img src={loading} style={{height:"90px",display:load}} alt="loading"/></div>
 
                 </div>
-               
+                <div className="ulbox">
+                                <ul>
+                                <NavLink to="/UserDash/Find" activeClassName="getact"> <li className="activo">Suggestion</li></NavLink> 
+                                <hr style={{margin:"0px"}}></hr>
+                                <NavLink to="/UserDash/Find/connection_request" activeClassName="getact"> <li >Connection Request</li></NavLink> 
+                                    <hr style={{margin:"0px"}}></hr>
+                                    <NavLink to="/UserDash/Find/pending_request" activeClassName="getact"><li >Pending Request</li></NavLink>
+                                    <hr style={{margin:"0px"}}></hr>
+                                    <NavLink to="/UserDash/Find/your_mates" activeClassName="getact"><li >Your Mate</li></NavLink>
+                                </ul>
+                        </div>
         </div>
     )
 }

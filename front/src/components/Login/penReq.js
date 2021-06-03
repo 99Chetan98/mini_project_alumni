@@ -6,6 +6,7 @@ import {useEffect,useState} from 'react';
 const Notification = () => {
     const history=useHistory();
     const [userdata,setuserdata]=useState([]);
+    const [load,setload]=useState("block");
     const finbatch=async()=>{
         try{
             const res=await fetch("/userlog",{
@@ -20,6 +21,7 @@ const Notification = () => {
             const data=await res.json();
             
             setuserdata(data.conreq.reverse());
+           
 
                    
         }catch(e){
@@ -31,13 +33,16 @@ const Notification = () => {
 
     useEffect(() => {
             finbatch();
-           
+           return()=>{
+               setuserdata([]);
+           }
             
     },[])
-
+    setTimeout(function(){ setload("none"); }, 800);
     return (
         <div>
             <Header/>
+            <div className="loading" style={{display:load}}><div className="stick"></div></div>
                       <div className="container find">
                         <div className="row d-flex justify-content-center">
                             
@@ -48,7 +53,7 @@ const Notification = () => {
                                 return(
                                     <>
                                                 <div className="col-md-3 col-sm-2">     
-                                                    <ConReq id={e.reqc} opid={1}/>
+                                                    <ConReq id={e.reqc} opid={1} condition={{but:"true",text:"Pending"}}/>
                                                     </div>
                                     </>
                                 )
@@ -61,11 +66,13 @@ const Notification = () => {
 
              <div className="ulbox">
                                 <ul>
-                                <NavLink to="/UserDash/Notification" activeClassName="getact"> <li >Connection Request</li></NavLink> 
+                                <NavLink to="/UserDash/Find" activeClassName="getact"> <li >Suggestion</li></NavLink> 
+                                <hr style={{margin:"0px"}}></hr>
+                                <NavLink to="/UserDash/Find/connection_request" activeClassName="getact"> <li >Connection Request</li></NavLink> 
                                     <hr style={{margin:"0px"}}></hr>
-                                    <NavLink to="/UserDash/Notification/pending_request" activeClassName="getact"><li className="activo">Pending Request</li></NavLink>
+                                    <NavLink to="/UserDash/Find/pending_request" activeClassName="getact"><li className="activo">Pending Request</li></NavLink>
                                     <hr style={{margin:"0px"}}></hr>
-                                    <NavLink to="/UserDash/Notification/your_mates" activeClassName="getact"><li >Your Mate</li></NavLink>
+                                    <NavLink to="/UserDash/Find/your_mates" activeClassName="getact"><li >Your Mate</li></NavLink>
                                 </ul>
                         </div>
         </div>

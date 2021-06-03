@@ -3,11 +3,11 @@ import Header from './NavHeader';
 import ConReq from './ConReq';
 import {useHistory,NavLink} from 'react-router-dom';
 import {useEffect,useState} from 'react';
+import './style.css';
 import Loader from './Loader';
-const Notification = () => {
+const ConnectReq = () => {
     const history=useHistory();
     const [userdata,setuserdata]=useState([]);
-  
     const finbatch=async()=>{
         try{
             const res=await fetch("/userlog",{
@@ -21,8 +21,7 @@ const Notification = () => {
             });
             const data=await res.json();
             
-            setuserdata(data.conreq.reverse());
-           
+            setuserdata(data.conreq);
 
                    
         }catch(e){
@@ -31,15 +30,15 @@ const Notification = () => {
         }
         
     }
-   
+
     useEffect(() => {
             finbatch();
-           return ()=>{
+           return()=>{
                setuserdata([]);
            }
             
     },[])
-
+  
     return (
         <div>
             <Header/>
@@ -49,15 +48,21 @@ const Notification = () => {
                             
                         {
                             userdata.map((e)=>{
-                                if(e.status==2){
-                            
+                                if(e.status==1){
                                 return(
                                     <>
                                                 <div className="col-md-3 col-sm-2">     
-                                                    <ConReq id={e.reqc} opid={2} condition={{but:"",text:"View profile"}}/>
+                                                    <ConReq id={e.reqc} opid={0} condition={{but:"",text:"Accept"}}/>
                                                     </div>
                                     </>
                                 )
+                                }
+                                else{
+                                    return(
+                                        <>
+                                        
+                                        </>
+                                    )
                                 }
                             })
                         }
@@ -69,17 +74,15 @@ const Notification = () => {
                                 <ul>
                                 <NavLink to="/UserDash/Find" activeClassName="getact"> <li >Suggestion</li></NavLink> 
                                 <hr style={{margin:"0px"}}></hr>
-                                <NavLink to="/UserDash/Find/connection_request" activeClassName="getact"> <li >Connection Request</li></NavLink> 
+                                <NavLink to="/UserDash/Find/connection_request" activeClassName="getact"> <li className="activo">Connection Request</li></NavLink> 
                                     <hr style={{margin:"0px"}}></hr>
-                                    <NavLink to="/UserDash/Find/pending_request"activeClassName="getact" ><li >Pending Request</li></NavLink>
+                                    <NavLink to="/UserDash/Find/pending_request" activeClassName="getact"><li >Pending Request</li></NavLink>
                                     <hr style={{margin:"0px"}}></hr>
-                                    <NavLink to="/UserDash/Find/your_mates" activeClassName="getact"><li className="activo">Your Mate</li></NavLink>
+                                    <NavLink to="/UserDash/Find/your_mates" activeClassName="getact"><li >Your Mate</li></NavLink>
                                 </ul>
                         </div>
-                        
         </div>
-        
     )
 }
 
-export default Notification
+export default ConnectReq

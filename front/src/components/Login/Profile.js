@@ -3,6 +3,7 @@ import Header from './NavHeader';
 import {useHistory} from 'react-router-dom';
 import './style.css';
 import img from '../../img/default.jpeg';
+import Loader from './Loader';
 function Profile() {
     const history=useHistory();
     const [userdata,setuserdata]=useState([])
@@ -35,6 +36,7 @@ function Profile() {
     
         <>
             <Header/>
+            <Loader timing={500}/>
             <div className="container">
                 <div className="profileBox">  
                     <div className="d-flex justify-content-center" style={{top:"-50px",position:"relative"}}> 

@@ -5,11 +5,13 @@ import {useHistory,useLocation} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import img from '../../img/top.jpg';
 import { compareSync } from 'bcryptjs';
-const Batch_Profile = ({ id }) => {
-    const [sta,setsta]=useState({
-        status:"",
-        text:"Connect"
-    });
+import Loader from './Loader';
+const Batch_Profile = () => {
+    // const [sta,setsta]=useState({
+    //     status:"",
+    //     text:""
+    // });
+    const [sta,setsta]=useState("Connect");
     const [userdata,setuserdata]=useState([]);
     const [Ope,setOpe]=useState({
         text:"",
@@ -52,6 +54,10 @@ const Batch_Profile = ({ id }) => {
     const history=useHistory();
   const search = useLocation().search;
   const name = new URLSearchParams(search).get('uid');
+  const stat = new URLSearchParams(search).get('status');
+  if(stat===1){
+    setsta({text:"Pending"});
+}
     useEffect(async() => {
         try{
             const res=await fetch(`/find/${name}`,{
@@ -66,12 +72,13 @@ const Batch_Profile = ({ id }) => {
             const data=await res.json();
             setuser(data);
 
+
                    
         }catch(e){
             console.log(e);
             history.push('/Login');
         }
-
+        console.log(stat)
 
 
    
@@ -83,33 +90,62 @@ const Batch_Profile = ({ id }) => {
 
     },[name]);
 
+    const fun=()=>{
+        for(var i in userdata.conreq)
+        {
+            var temp;
+            if(userdata.conreq[i].reqc==user._id)
+                if(userdata.conreq[i].status===2){
+                    setsta("Mates");
+                }
+                else if(userdata.conreq[i].status===1){
+                    setsta("Accept");
+                }
+                else if(userdata.conreq[i].status===0){
+                    setsta("Pending");
+                }
+               else if(userdata.conreq[i].status===undefined){
+                    setsta("Connect");
+                } 
+                    
+        }
+    }
     useEffect(() => {
        
-       for(var i in userdata.conreq)
-        {
-            if(userdata.conreq[i].reqc==user._id)
-                if(userdata.conreq[i].status=="2"){
-                    setsta({text:"Mates"});
-                }
-              else if(userdata.conreq[i].status=="0"){
-                    setsta({text:"Pending"});
-                }
-                else if(userdata.conreq[i].status=="1"){
-                    setsta({text:"Accept"});
-                }
-               else if(userdata.conreq[i].status==undefined){
-                    setsta({text:"Connect"});
-                }
-
-
+        fun();
+        return()=>{
+            setsta("Pending");
         }
       
-    },[name,user])
+    },[user,name])
 
-   console.log(userdata.conreq);
+
+    const beMate=(sta)=>{
+     
+        if(sta==="Accept"){
+            fetch(`/bemates`,{
+                method:"POST",
+                headers:{
+                  'Content-Type':'application/json; charset=utf-8',
+                  "Access-Control-Allow-Origin": "*",
+                },
+                body:JSON.stringify(
+                  {
+                     user:userdata._id,
+                     mateid:name
+                  })
+            }).then((res)=>{
+                console.log(res.json);
+            }).catch(e=>{
+                console.log(e);
+            })
+        }
+    }
+  
     return (
         <div>
                     <Header/>
+                    <Loader timing={500}/>
                      <div className="container">
                 <div className="profileBox">  
                    
@@ -143,7 +179,7 @@ const Batch_Profile = ({ id }) => {
                     
                     </div>
                     <hr></hr>
-                    <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary conset" style={{marginBottom:"10px"}}>{sta.text}</button></div>
+                    <div className="d-flex justify-content-center" id={sta}><button type="button" className="btn btn-primary conset" onClick={()=>beMate(sta)} style={{marginBottom:"10px"}}>{sta}</button></div>
                 </div>
 
             </div>

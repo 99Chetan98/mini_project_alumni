@@ -16,6 +16,7 @@ import  Batch_Profile from  './components/Login/Batch_Profile';
 import  Pending from  './components/Login/penReq';
 import  Mates from  './components/Login/Mates';
 
+import  ConnectReq from  './components/Login/ConnectReq';
 const App=()=>{
   return(
     <>
@@ -52,7 +53,10 @@ const App=()=>{
             <Route exact path="/UserDash/Notification">
                     <Notification/>
             </Route>
-
+            
+            <Route exact path="/UserDash/Find/connection_request">
+                    <ConnectReq/>
+            </Route>
             <Route exact path="/UserDash/Find">
                     <Find/>
             </Route>
@@ -63,10 +67,10 @@ const App=()=>{
             <Route exact path="/UserDash/Batch_Profile">
                     <Batch_Profile/>
             </Route>
-            <Route exact path="/UserDash/Notification/pending_request">
+            <Route exact path="/UserDash/Find/pending_request">
                     <Pending/>
             </Route>
-            <Route exact path="/UserDash/Notification/your_mates">
+            <Route exact path="/UserDash/Find/your_mates">
                     <Mates/>
             </Route>
 

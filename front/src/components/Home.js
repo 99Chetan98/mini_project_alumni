@@ -76,7 +76,7 @@ const Home = () => {
                     </Swiper>
 
           </div>
-          <Login/>
+          
     </>
   )
 }

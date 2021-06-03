@@ -99,8 +99,8 @@ const Login = () => {
               <div className="col-sm-6">
                         <h1>Hello<span> Jnecians</span></h1>
                         <h5>
-                        Welcome My Dear Students, It's indeed a pleasure to welcome you on JNEC. JNEC aims at sculpting
-                         versatility of the students along with technical expertise in their own streams
+                        Welcome dear students, It's indeed a pleasure to welcome you to JNEC Alumni Association Portal. JNEC aims at sculpting
+                         the versatility of the students along with technical expertise in their own domain.
                         </h5>
               </div>
               <div className="col-sm-6">
@@ -123,7 +123,7 @@ const Login = () => {
                                 
                           </div>
                           <div className="justify-end">
-                                  <h4>Dont Have An Account ? <span><NavLink exact to="/Register"> Sign Up</NavLink></span></h4>
+                                  <h4>Don't have an Account ? <span><NavLink exact to="/Register"> Sign Up</NavLink></span></h4>
                                   <button type="submit" className="btn btn-primary bot" onClick={loginUser}>Submit</button>
                           </div>
                           

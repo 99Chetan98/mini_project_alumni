@@ -65,7 +65,7 @@ const Head=()=>{
               <div className="container">
                   <img src={Logo} className="d-flex position-absolute" alt="logo" id="img2" />
                       <span>
-                          <h5>Jawaharlal Nehru Engineering Collage</h5>
+                          <h5>Jawaharlal Nehru Engineering College</h5>
                           <h2 style={{textTransform: "uppercase"}}>Alumni Association</h2>
                       </span>
                       <img src={Nac} className="d-flex position-absolute" alt="logo" id="img3" />

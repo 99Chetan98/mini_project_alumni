@@ -2,7 +2,7 @@ import React , {useEffect,useState} from 'react';
 import Header from './NavHeader';
 import {useHistory} from 'react-router-dom';
 import './style.css';
-import img from '../../img/top.jpg';
+import img from '../../img/default.jpeg';
 function Profile() {
     const history=useHistory();
     const [userdata,setuserdata]=useState([])
@@ -48,9 +48,9 @@ function Profile() {
                     <div className="container">
                     <div className="row ">
                         <div className="col-sm-4 ">
-                            <h6>Organisation</h6>
+                            <h6>Organisation currently working with</h6>
                              <h5> {userdata.organisation}</h5>  
-                             <h6>Specialisation</h6>
+                             <h6>Job Profile</h6>
                              <h5> {userdata.areaofexpert}</h5>  
                              <h6>Gender</h6>
                              <h5> {userdata.gender}</h5>

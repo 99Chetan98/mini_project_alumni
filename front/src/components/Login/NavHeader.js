@@ -63,7 +63,7 @@ const NavHeader = () => {
         <>
         <div className="HeadBar">
         <img src={logo} alt="" id="prof"/>
-        <h1>Allumni Association</h1>
+        <h1>Alumni Association</h1>
         <div className="Navigation">
             <NavLink  exact activeClassName="activ2"  to="/UserDash"><i className="fa fa-home" id="navicon" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Home" delay="100"></i></NavLink>
             <NavLink exact  activeClassName="activ2" to="/UserDash/Find"><i className="fa fa-users" id="navicon" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Connect"></i></NavLink>

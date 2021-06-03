@@ -170,7 +170,7 @@ const postData=async(e)=>{
                               <div className="col-sm-4">
                                   <div className="form-group">
                                       <label htmlFor="phone">Phone No.</label>
-                                      <input type="text" className="form-control" value={User.phone} onChange={handleInput}  id="phone" placeholder="Enter phone no." name="phone" maxLength="10" required/>
+                                      <input type="text" className="form-control" value={User.phone} onChange={handleInput}  id="phone" placeholder="Enter Whatsapp no." name="phone" maxLength="10" required/>
                                     </div>
                               </div>
                               <div className="col-sm-4">
@@ -198,7 +198,7 @@ const postData=async(e)=>{
                             
                         </div>
                       </div>
-                        <h5 id="heading"  data-toggle="collapse" data-target="#div2"><i class="fa fa-university" aria-hidden="true"></i> Collage Association Details</h5>
+                        <h5 id="heading"  data-toggle="collapse" data-target="#div2"><i class="fa fa-university" aria-hidden="true"></i> College Association Details</h5>
                         <div className="collapse" id="div2">
                         <div className="row ">
                           <div className="col-sm-4">
@@ -290,12 +290,12 @@ const postData=async(e)=>{
                               <div className="col-sm-6">
                                 <div className="form-group">
                                     <label htmlFor="organisation">Organisation currently working with</label>
-                                    <input className="form-control" value={User.organisation} onChange={handleInput}  type="text" name="organisation" placeholder="Please enter organisation details without any punctuation/special characters" title="Avoid special symbol/punctuation" pattern="[a-zA-Z0-9 ]+" required/>
+                                    <input className="form-control" value={User.organisation} onChange={handleInput}  type="text" name="organisation" placeholder="Without any punctuation/special characters" title="Avoid special symbol/punctuation" pattern="[a-zA-Z0-9 ]+" required/>
                                  </div>
                               </div>
                               <div className="col-sm-3">
                                 <div className="form-group">
-                                    <label htmlFor="date">Working in Capacity</label>
+                                    <label htmlFor="date">Working as</label>
                                     <select name="designation" className="form-control" value={User.designation} onChange={handleInput}  required>
                                         <option value="" defaultValue="selected">Select</option>
                                         <option value="Employee">Employee</option>
@@ -307,7 +307,7 @@ const postData=async(e)=>{
                               </div>
                               <div className="col-sm-3">
                                   <div className="form-group">
-                                      <label htmlFor="Name"> Area of Expertise</label>
+                                      <label htmlFor="Name">Job Profile</label>
                                       <input className="form-control" value={User.areaofexpert} onChange={handleInput}  type="text" name="areaofexpert" placeholder="Enter your area of Expertise/Interest" required/>
                                     </div>
                               </div>

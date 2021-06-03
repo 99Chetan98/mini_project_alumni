@@ -52,7 +52,7 @@ const Home = () => {
           <Head/>
           <div className="Home_div"  style={{marginTop:state.div}}>
 
-              <h1 id="Home_text">&#x201C;Conect With Your Batchmates&#x201D;</h1>
+              <h1 id="Home_text">&#x201C;Connect With Your Batchmates&#x201D;</h1>
 
 
 

@@ -1,10 +1,12 @@
-import React , {useEffect,useState} from 'react';
+import React , {useEffect,useState,useRef} from 'react';
 import Header from './NavHeader';
-import {useHistory} from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
 import './style.css';
 import img from '../../img/default.jpeg';
 import Loader from './Loader';
-function Profile() {
+import Mates from './Mates';
+
+function Profile(props) {
     const history=useHistory();
     const [userdata,setuserdata]=useState([])
     const checklogged=async()=>{
@@ -31,22 +33,50 @@ function Profile() {
     useEffect(() => {
         checklogged();
     }, []);
+//     const inputFile = useRef(null) ;
+//     const cliko = useRef(null) ;
+// const [file,setfile]=useState({
+//     filename:"",
+//     class:"",
+//     display:"none"
+// });
+//     const onButtonClick = (e) => {
+//         // `current` points to the mounted file input element
+//        inputFile.current.click();
+//     //    console.log(e.target.value)
+//       };
+//   const chang=(e)=>{
+//         setfile({filename:e.target.files[0].name,class:"filebut",display:""});
+        
+//   }
+//   const handleprof=async(e)=>{
+//         const fd=new FormData();
+//         fd.append('file',file.filename);
+   
  
+//       console.log(fd);
+//   }
+
     return (
     
         <>
             <Header/>
-            <Loader timing={500}/>
+          
+            <Loader timing={200}/>
             <div className="container">
+                
                 <div className="profileBox">  
-                    <div className="d-flex justify-content-center" style={{top:"-50px",position:"relative"}}> 
+                
+                    <div className=" justify-content-center" style={{top:"-50px",position:"relative",display:"grid",zIndex:"9"}}> 
                     <img src={img} alt="" id="profile_pic"/>
                     
-                    </div>  
-                    
-                    <h1>{userdata.name}</h1><hr></hr>
 
-                    
+                   
+                    </div>  
+                   
+                    <h1>{userdata.name}</h1>
+                   <div className="editb"><NavLink exact to="/UserDash/profile/edit"><button className="btn btn-outline-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i>Edit</button></NavLink></div>
+                    <hr></hr>
                     <div className="container">
                     <div className="row ">
                         <div className="col-sm-4 ">

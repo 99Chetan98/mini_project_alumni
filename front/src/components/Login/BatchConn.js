@@ -5,7 +5,7 @@ import {useHistory,NavLink} from 'react-router-dom';
     import img from '../../img/default.jpeg';
 import loading from '../../img/ezgif-2-6d0b072c3d3f.gif';
 import Loader from './Loader';
-
+import Mates  from './Mates';
 const BatchConn = () => {
     const [userdata,setuserdata]=useState([]);
     const [condata,setcondata]=useState([]);
@@ -154,7 +154,8 @@ const BatchConn = () => {
     return (
         <div>
                     <Header/>
-                        <Loader timing={1000}/>
+                        <Loader timing={800}/>
+                      
                 <div className="container find" style={{display:visible.find}}>
                     <div className="row d-flex justify-content-center">
 

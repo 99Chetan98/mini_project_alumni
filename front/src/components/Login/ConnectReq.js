@@ -38,35 +38,32 @@ const ConnectReq = () => {
            }
             
     },[])
-  
+    var tmp;
     return (
         <div>
             <Header/>
-            <Loader timing={1000}/>
+            <Loader timing={10}/>
                       <div className="container find">
                         <div className="row d-flex justify-content-center">
                             
                         {
                             userdata.map((e)=>{
                                 if(e.status==1){
+                                    tmp=1;
                                 return(
                                     <>
                                                 <div className="col-md-3 col-sm-2">     
-                                                    <ConReq id={e.reqc} opid={0} condition={{but:"",text:"Accept"}}/>
+                                                    <ConReq user={userdata} id={e.reqc} opid={0} condition={{but:"",text:"Accept"}}/>
                                                     </div>
                                     </>
                                 )
                                 }
                                 else{
-                                    return(
-                                        <>
-                                        
-                                        </>
-                                    )
-                                }
+                                    tmp=0
+                                } 
                             })
                         }
-                                 
+                                 {tmp==0?<h1 className="empty">You dont have any mates now</h1>:<h1 className="empty"></h1>}
                             </div>
                          </div>
 

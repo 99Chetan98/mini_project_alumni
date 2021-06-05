@@ -3,6 +3,7 @@ import Header from './NavHeader';
 import {useEffect,useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import img from '../../img/default.jpeg';
+import { compareSync } from 'bcryptjs';
 const ConReq = (props) => {
     const history=useHistory();
     const [user, setuser] = useState([]);
@@ -13,17 +14,20 @@ const ConReq = (props) => {
     })
     const finbatch=async()=>{
         try{
-            const res=await fetch("/userlog",{
-                method:"GET",
-               
-                headers:{
-                Accept:"application/json",
-                'Content-Type':'application/json'
-                },
-               
-            });
-            const data=await res.json();
-            setuserdata(data);
+            
+                const res=await fetch("/userlog",{
+                    method:"GET",
+                   
+                    headers:{
+                    Accept:"application/json",
+                    'Content-Type':'application/json'
+                    },
+                   
+                });
+                const data=await res.json();
+                setuserdata(data);         
+            
+           
             if(props.opid==1){
                 setOpe({
                     text:"pending",
@@ -61,7 +65,7 @@ const ConReq = (props) => {
     useEffect(async() => {
 
         try{
-            const res=await fetch(`/find/${props.id}`,{
+            const res=await fetch(`/find/${props.id}/${userdata._id}`,{
                 method:"GET",
                
                 headers:{
@@ -100,19 +104,19 @@ const ConReq = (props) => {
             })
         }
         else if(id==2){
-            history.push(`/UserDash/Batch_Profile?uid=${uid}`)
+            history.push(`/UserDash/Batch_Profile?uid=${uid}&status=${userdata._id}`)
         }
 
-        
+        console.log(id+"this");
     }
-    
+ 
     return (
         <div>
                
 
                 
                                        <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
-                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}&status=${props.opid}`);}}>{user.name}</h4>
+                                        <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}&status=${userdata._id}`);}}>{user.name}</h4>
                                         <h6>{user.dept} | {user.passingYear}</h6>
                                         
                                         <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" onClick={()=>Bemate(props.opid,user._id)} disabled={props.condition.but}>{props.condition.text}</button></div>

@@ -2,12 +2,14 @@ import React from 'react'
 import Header from './NavHeader';
 import ConReq from './ConReq';
 import {useHistory,NavLink} from 'react-router-dom';
-import {useEffect,useState} from 'react';
+import {useEffect,useState,useContext} from 'react';
 import Loader from './Loader';
-const Notification = () => {
+import  {Usercontext} from './UserHome';
+const Notification = (props) => {
     const history=useHistory();
     const [userdata,setuserdata]=useState([]);
-  
+    const [user,setuser]=useState([]);
+    const context = useContext(Usercontext);
     const finbatch=async()=>{
         try{
             const res=await fetch("/userlog",{
@@ -16,12 +18,13 @@ const Notification = () => {
                 headers:{
                 Accept:"application/json",
                 'Content-Type':'application/json'
-                },
-               
+                }
             });
             const data=await res.json();
             
             setuserdata(data.conreq.reverse());
+            setuser(data);
+            
            
 
                    
@@ -39,29 +42,34 @@ const Notification = () => {
            }
             
     },[])
-
+    var tmp;
     return (
         <div>
             <Header/>
-            <Loader timing={1000}/>
+            <Loader timing={300}/>
                       <div className="container find">
                         <div className="row d-flex justify-content-center">
                             
                         {
+                           
                             userdata.map((e)=>{
                                 if(e.status==2){
-                            
+                                    tmp=1;
                                 return(
                                     <>
                                                 <div className="col-md-3 col-sm-2">     
-                                                    <ConReq id={e.reqc} opid={2} condition={{but:"",text:"View profile"}}/>
+                                                    <ConReq id={e.reqc} user={user} opid={2} condition={{but:"",text:"View profile"}}/>
                                                     </div>
                                     </>
                                 )
                                 }
+                                else{
+                                    tmp=0
+                                }
                             })
+                        
                         }
-                                 
+                                 {tmp==0?<h1 className="empty">You dont have any mates now</h1>:<h1 className="empty"></h1>}
                             </div>
                          </div>
 

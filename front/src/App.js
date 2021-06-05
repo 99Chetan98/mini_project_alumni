@@ -1,7 +1,7 @@
 // import Nav from './components/Nav';
 import Home from './components/Home';
-import { Route,Switch, BrowserRouter } from "react-router-dom";
-import React from 'react';
+import { Route,Switch, BrowserRouter ,useHistory} from "react-router-dom";
+import React ,{useState,useEffect}from 'react';
 import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -13,11 +13,12 @@ import Profile from './components/Login/Profile';
 import Find from  './components/Login/BatchConn';
 import Logout from  './components/Logout';
 import  Batch_Profile from  './components/Login/Batch_Profile';
-import  Pending from  './components/Login/penReq';
+import  Pending from  './components/Login/Pending';
 import  Mates from  './components/Login/Mates';
-
+import EditProfile from './components/Login/EditProfile';
 import  ConnectReq from  './components/Login/ConnectReq';
 const App=()=>{
+    
   return(
     <>
 
@@ -48,14 +49,14 @@ const App=()=>{
         
             
         <Route exact path="/UserDash/profile">
-                <Profile/>
+                <Profile name={'userdata'}/>
             </Route>
             <Route exact path="/UserDash/Notification">
                     <Notification/>
             </Route>
             
             <Route exact path="/UserDash/Find/connection_request">
-                    <ConnectReq/>
+                    <ConnectReq />
             </Route>
             <Route exact path="/UserDash/Find">
                     <Find/>
@@ -68,10 +69,13 @@ const App=()=>{
                     <Batch_Profile/>
             </Route>
             <Route exact path="/UserDash/Find/pending_request">
-                    <Pending/>
+                    <Pending />
             </Route>
             <Route exact path="/UserDash/Find/your_mates">
-                    <Mates/>
+                    <Mates />
+            </Route>
+            <Route exact path="/UserDash/profile/edit">
+                <EditProfile/>
             </Route>
 
     </>

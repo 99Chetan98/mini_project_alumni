@@ -7,16 +7,9 @@ import img from '../../img/top.jpg';
 import { compareSync } from 'bcryptjs';
 import Loader from './Loader';
 const Batch_Profile = () => {
-    // const [sta,setsta]=useState({
-    //     status:"",
-    //     text:""
-    // });
-    const [sta,setsta]=useState("Connect");
+
+    const [sta,setsta]=useState("");
     const [userdata,setuserdata]=useState([]);
-    const [Ope,setOpe]=useState({
-        text:"",
-        dis:""
-    })
     const finbatch=async()=>{
         try{
             const res=await fetch("/userlog",{
@@ -29,10 +22,7 @@ const Batch_Profile = () => {
                
             });
             const data=await res.json();
-            
-            setuserdata(data);
-
-                   
+            setuserdata(data);         
         }catch(e){
             console.log(e);
             history.push('/Login');
@@ -46,27 +36,56 @@ const Batch_Profile = () => {
     },[])
 
 
-
-
-
-
   const [user, setuser] = useState([]);
+  const [rstat, setrstat] = useState();
+
+  const fun=()=>{
+ 
+
+            for(var i in userdata.conreq){
+                
+                if(userdata.conreq[i].reqc===user._id || userdata.conreq[i].reqc===name){
+                    var butstat=userdata.conreq[i].status;
+                    console.log(butstat)
+                    if(butstat===0){
+                        setrstat("Pending")
+                    }
+                    else if(butstat===1){
+                        setrstat("Accept")
+                    }
+                    else if(butstat===2){
+                        setrstat("Mates")
+                    }
+                }
+            }
+     
+
+
+}
+useEffect(() => {
+   
+    fun();
+    return()=>{
+        setrstat("Connect")
+    }
+  
+},[user])
+
     const history=useHistory();
   const search = useLocation().search;
   const name = new URLSearchParams(search).get('uid');
   const stat = new URLSearchParams(search).get('status');
-  if(stat===1){
-    setsta({text:"Pending"});
-}
+
     useEffect(async() => {
+ 
         try{
-            const res=await fetch(`/find/${name}`,{
+            const res=await fetch(`/find/${name}/${stat}`,{
                 method:"GET",
                
                 headers:{
                 Accept:"application/json",
                 'Content-Type':'application/json'
-                },
+                }
                
             });
             const data=await res.json();
@@ -78,50 +97,25 @@ const Batch_Profile = () => {
             console.log(e);
             history.push('/Login');
         }
-        console.log(stat)
+     
 
 
    
-
-
-
-
-
-
-    },[name]);
-
-    const fun=()=>{
-        for(var i in userdata.conreq)
-        {
-            var temp;
-            if(userdata.conreq[i].reqc==user._id)
-                if(userdata.conreq[i].status===2){
-                    setsta("Mates");
-                }
-                else if(userdata.conreq[i].status===1){
-                    setsta("Accept");
-                }
-                else if(userdata.conreq[i].status===0){
-                    setsta("Pending");
-                }
-               else if(userdata.conreq[i].status===undefined){
-                    setsta("Connect");
-                } 
-                    
+        if(stat===1){
+            setsta({text:"Pending"});
         }
-    }
-    useEffect(() => {
-       
-        fun();
-        return()=>{
-            setsta("Pending");
-        }
-      
-    },[user,name])
 
+
+
+
+
+    },[name,stat]);
+    
+
+const [tr,settr]=useState("");
 
     const beMate=(sta)=>{
-     
+        settr("true")
         if(sta==="Accept"){
             fetch(`/bemates`,{
                 method:"POST",
@@ -140,12 +134,33 @@ const Batch_Profile = () => {
                 console.log(e);
             })
         }
+        else if(sta==="Connect"){
+            fetch(`/put_con/${userdata._id}`,{
+                method:"POST",
+                headers:{
+                  'Content-Type':'application/json; charset=utf-8',
+                  "Access-Control-Allow-Origin": "*",
+                },
+                body:JSON.stringify(
+                  {
+                     id:name
+                  })
+            }).then((res)=>{
+                console.log(res.json);
+            }).catch(e=>{
+                console.log(e);
+            })
+        }
     }
-  
+    
+  console.log(sta);
+
+
+      
     return (
         <div>
                     <Header/>
-                    <Loader timing={500}/>
+                    <Loader timing={800}/>
                      <div className="container">
                 <div className="profileBox">  
                    
@@ -179,7 +194,7 @@ const Batch_Profile = () => {
                     
                     </div>
                     <hr></hr>
-                    <div className="d-flex justify-content-center" id={sta}><button type="button" className="btn btn-primary conset" onClick={()=>beMate(sta)} style={{marginBottom:"10px"}}>{sta}</button></div>
+                    <div className="d-flex justify-content-center" id={rstat}><button type="button" className="btn btn-primary conset" onClick={()=>beMate(rstat)} style={{marginBottom:"10px"}} disabled={tr}>{rstat}</button></div>
                 </div>
 
             </div>

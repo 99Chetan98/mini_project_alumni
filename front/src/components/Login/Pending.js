@@ -3,7 +3,8 @@ import Header from './NavHeader';
 import ConReq from './ConReq';
 import {useHistory,NavLink} from 'react-router-dom';
 import {useEffect,useState} from 'react';
-const Notification = () => {
+
+const Pending = (props) => {
     const history=useHistory();
     const [userdata,setuserdata]=useState([]);
     const [load,setload]=useState("block");
@@ -32,13 +33,14 @@ const Notification = () => {
     }
 
     useEffect(() => {
-            finbatch();
+        finbatch();
            return()=>{
                setuserdata([]);
            }
             
     },[])
-    setTimeout(function(){ setload("none"); }, 800);
+    setTimeout(function(){ setload("none"); }, 200);
+    var tmp;
     return (
         <div>
             <Header/>
@@ -48,19 +50,24 @@ const Notification = () => {
                             
                         {
                             userdata.map((e)=>{
+                                
                                 if(e.status==0){
+                                    tmp=1;
                             
                                 return(
                                     <>
                                                 <div className="col-md-3 col-sm-2">     
-                                                    <ConReq id={e.reqc} opid={1} condition={{but:"true",text:"Pending"}}/>
+                                                    <ConReq id={e.reqc} opid={1} user={userdata} condition={{but:"true",text:"Pending"}}/>
                                                     </div>
                                     </>
                                 )
                                 }
+                                else{
+                                    tmp=0
+                                } 
                             })
                         }
-                                 
+                                   {tmp==0?<h1 className="empty">You dont have any pending request now</h1>:<h1 className="empty"></h1>}
                             </div>
                          </div>
 
@@ -79,4 +86,4 @@ const Notification = () => {
     )
 }
 
-export default Notification
+export default Pending

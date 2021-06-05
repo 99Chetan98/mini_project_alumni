@@ -8,11 +8,13 @@ const dotenv=require("dotenv");
 dotenv.config({path:'./config.env'});
 require("./DB/conn.js");
 const authen=require("./middleware/Auth");
-
+const fileUpload=require('express-fileupload')
 const User=require("./modules/register");
 const { findOne } = require("./modules/register");
+
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(fileUpload());
 app.get("/",(req,res)=>{
     res.send("Hello World");
 });
@@ -143,16 +145,25 @@ app.get("/logout",(req,res)=>{
     res.status(200).send();
 })
 
-app.get("/find/:id",(req,res)=>{
-    const _id=req.params.id;
-    User.findOne({_id})
-    .select("_id name organisation areaofexpert dept passingYear")
-    .then(user=>{
-        res.send(user);
-    })
-    .catch(e=>{
-        console.log(e);
-    })
+app.get("/find/:matid/:userid",async(req,res)=>{
+    const _id=req.params.matid;
+    const _st=req.params.userid;
+
+    
+
+   
+        User.findOne({_id})
+        .select("_id name organisation areaofexpert dept passingYear")
+        .then(user=>{
+            res.send(user);
+        })
+        .catch(e=>{
+            console.log(e);
+        })
+  
+
+
+
 
 })
 
@@ -191,6 +202,57 @@ app.post("/bemates",async(req,res)=>{
 
 })
 
+app.post("/Update_data",async(req,res)=>{
+    const { id,
+        name,
+        email,
+        phone,
+        dob,
+        gender,
+        add,
+        association,
+        dept,
+        passingYear,
+        organisation,
+        designation,
+        areaofexpert}=req.body;
+        try{
+            const update_profile=await User.updateOne({_id:id},{$set:{
+                id,
+                name,
+                email,
+                phone,
+                dob,
+                gender,
+                add,
+                association,
+                dept,
+                passingYear,
+                organisation,
+                designation,
+                areaofexpert
+            }})
+
+            if(update_profile){
+                res.status(201).send("updated");
+            }
+        }catch(e){
+            console.log(e)
+            res.status(400);
+        }
+})
+// //app.post("/profile_up",(req,res)=>{
+
+
+//     const file=req.files.file;
+//     file.mv(`${__dirname}/profile/${file}`,err=>{
+//         if(err){
+//             console.log(err);
+//             res.status(500).send(err);
+//         }
+//         res.json({filename:file.name,filepath:`/profile/${file}`});
+//     });
+// })
 app.listen(8000,()=>{
     console.log(`successfully connected `);
 });

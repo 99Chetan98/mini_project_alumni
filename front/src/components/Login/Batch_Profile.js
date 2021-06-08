@@ -54,7 +54,7 @@ const Batch_Profile = () => {
                         setrstat("Accept")
                     }
                     else if(butstat===2){
-                        setrstat("Mates")
+                        setrstat("View Full profile")
                     }
                 }
             }
@@ -69,8 +69,8 @@ useEffect(() => {
         setrstat("Connect")
     }
   
-},[user])
-
+})
+console.log(rstat)
     const history=useHistory();
   const search = useLocation().search;
   const name = new URLSearchParams(search).get('uid');
@@ -150,6 +150,9 @@ const [tr,settr]=useState("");
             }).catch(e=>{
                 console.log(e);
             })
+        }
+        else if(sta==="View Full profile"){
+           history.push(`/UserDash/Mate_profile?user_req=${name}`)
         }
     }
     

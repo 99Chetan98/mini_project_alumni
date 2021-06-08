@@ -80,6 +80,16 @@ const regi_schema=new mongoose.Schema({
                 type:Number
             }
         }
+    ],
+    profile_pic:[
+        {
+            pic_name:{
+                type:String
+            },
+            updatetime:{
+                type:String
+            }
+        }
     ]
 
 

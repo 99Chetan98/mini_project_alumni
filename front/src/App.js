@@ -17,6 +17,7 @@ import  Pending from  './components/Login/Pending';
 import  Mates from  './components/Login/Mates';
 import EditProfile from './components/Login/EditProfile';
 import  ConnectReq from  './components/Login/ConnectReq';
+import  Mate_profile from  './components/Login/Mate_profile';
 const App=()=>{
     
   return(
@@ -77,7 +78,10 @@ const App=()=>{
             <Route exact path="/UserDash/profile/edit">
                 <EditProfile/>
             </Route>
-
+            <Route exact path="/UserDash/Mate_profile">
+                <Mate_profile/>
+            </Route>
+            
     </>
     
   );

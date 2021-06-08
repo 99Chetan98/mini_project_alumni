@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import './style.css';
 import img from '../../img/default.jpeg';
 import Loader from './Loader';
-;
+
 
 function EditProfile(props) {
     const history=useHistory();
@@ -55,7 +55,7 @@ function EditProfile(props) {
             setuserdata({...userdata,[name]:value});
     }
 
-const  Submitform=(e)=>{
+const  Submitform=async(e)=>{
     e.preventDefault();
     const {name,
         email,
@@ -72,7 +72,7 @@ const  Submitform=(e)=>{
 
     }=userdata;
 
-    fetch("/Update_data",{
+    const res =await fetch("/Update_data",{
         method:"POST",
         headers:{
           'Content-Type':'application/json; charset=utf-8',
@@ -112,13 +112,66 @@ const  Submitform=(e)=>{
 
 
 }
+const [file,setfile]=useState([]);
+const pp=(e)=>{
+        setfile(e.target.files[0])
+}
+const [imo,setimo]=useState(img);
+const [im,setim]=useState(img);
+const savepp=async(e)=>{
+    e.preventDefault();
 
+    var form_data = new FormData();
+    form_data.append('file', file);
+    // console.log(Array.from(form_data))
+    try{
+        const res=await fetch(`/upload_pp/${userdata._id}`,{
+            method:"POST",
+            body:form_data
+        });
+        const data=await res.json();
+        console.log(data.filename +" joined")
+        // console.log(data.filename);
+        const image = window.location.origin;
+        setimo(require(`../Pictures/${data.filename}`));
+        
+        
+
+        if(data.status==200){
+            window.alert("profile picture updated sucessfully");
+            history.push("/UserDash/profile");
+        }else{
+          window.alert("their was problme while updating your profile picture");
+        }
+       
+        
+       
+    }
+    catch(e){
+        console.log(e)
+    }
+
+}
+useEffect(() => {
+    setim(imo.default);
+},[savepp])
+
+console.log(im);
     return (
     
         <>
             <Header/>
           
             <Loader timing={200}/>
+            <div className="d-flex justify-content-center">
+                <img src={im}/>
+            <form method="POST" id="form">
+            <input  type="file" className="form-control" onChange={pp} style={{marginTop:"60px"}}  id="profilepic" placeholder="upload pic"  name="profilepic" />
+            <button type="submit" onClick={savepp}>submit</button>
+                                    
+                </form>
+
+            </div>
             <div className="container regi_box">
             <form method="POST">
                       <h5 id="heading" data-toggle="collapse" data-target="#deemo"><i class="fa fa-user" aria-hidden="true"></i> Personal Details</h5>

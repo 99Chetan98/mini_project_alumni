@@ -5,10 +5,15 @@ import './style.css';
 import img from '../../img/default.jpeg';
 import Loader from './Loader';
 import Mates from './Mates';
+import logo2 from '../../profilepic/default.jpeg';
+import { set } from 'mongoose';
 
 function Profile(props) {
+    const [imo,setimo]=useState({img})
     const history=useHistory();
     const [userdata,setuserdata]=useState([])
+    const [profdata,setprofdata]=useState([])
+    const [pp,setpp]=useState(img);
     const checklogged=async()=>{
         try{
             const res=await fetch("/userlog",{
@@ -22,6 +27,9 @@ function Profile(props) {
             });
             const data=await res.json();
             setuserdata(data);
+            setprofdata(data.profile_pic);
+           
+
                    
         }catch(e){
             console.log(e);
@@ -32,6 +40,7 @@ function Profile(props) {
     }
     useEffect(() => {
         checklogged();
+        
     }, []);
 //     const inputFile = useRef(null) ;
 //     const cliko = useRef(null) ;
@@ -57,6 +66,35 @@ function Profile(props) {
 //       console.log(fd);
 //   }
 
+useEffect(() => {
+
+     setimo(profdata[profdata.length-1]);
+
+
+
+       
+
+}, [profdata])
+// useEffect(() => {
+
+//     setpp(imo.default);
+     
+//        // setpp(require(`../Pictures/${imo}`));
+      
+
+// }, [])
+
+useEffect(() => {
+    if(imo && profdata && imo!=='./undefined' && userdata && typeof(imo.pic_name) !== 'undefined'){
+        // setpp(require(`../Pictures/${imo}`))
+        console.log(imo.pic_name);
+        setpp(require(`../Pictures/${imo.pic_name}`).default)
+      
+    }
+    
+})
+
+console.log(pp)
     return (
     
         <>
@@ -68,7 +106,7 @@ function Profile(props) {
                 <div className="profileBox">  
                 
                     <div className=" justify-content-center" style={{top:"-50px",position:"relative",display:"grid",zIndex:"9"}}> 
-                    <img src={img} alt="" id="profile_pic"/>
+                    <img src={pp} alt="" id="profile_pic"/>
                     
 
                    

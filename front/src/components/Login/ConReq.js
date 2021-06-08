@@ -104,7 +104,7 @@ const ConReq = (props) => {
             })
         }
         else if(id==2){
-            history.push(`/UserDash/Batch_Profile?uid=${uid}&status=${userdata._id}`)
+            history.push(`/UserDash/Mate_profile?user_req=${uid}`)
         }
 
         console.log(id+"this");

@@ -11,10 +11,11 @@ const authen=require("./middleware/Auth");
 const fileUpload=require('express-fileupload')
 const User=require("./modules/register");
 const { findOne } = require("./modules/register");
+const path=require('path');
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(fileUpload());
+
 app.get("/",(req,res)=>{
     res.send("Hello World");
 });
@@ -241,10 +242,10 @@ app.post("/Update_data",async(req,res)=>{
             res.status(400);
         }
 })
-// //app.post("/profile_up",(req,res)=>{
+// app.post("/profile_up",(req,res)=>{
 
 
-//     const file=req.files.file;
+//     const file=req.files.profile_pic;
 //     file.mv(`${__dirname}/profile/${file}`,err=>{
 //         if(err){
 //             console.log(err);
@@ -253,6 +254,49 @@ app.post("/Update_data",async(req,res)=>{
 //         res.json({filename:file.name,filepath:`/profile/${file}`});
 //     });
 // })
+app.use('/static', express.static(path.join(__dirname, 'profilepic')))
+app.use(fileUpload());
+app.post("/upload_pp/:id",async(req,res)=>{
+
+
+    try{
+ if(req.files===null){
+     return res.status(400).json({msg:"its khali he"});
+ }
+ const file=req.files.file;
+
+
+ const _id=req.params.id;
+ const user=await User.findOne({_id:_id});
+ const updaprof=user.profile_pic.concat({pic_name:file.name,updatetime:new Date()})
+ const update_pp=await User.updateOne({_id},{$set:{profile_pic:updaprof}})
+ if(update_pp){
+    file.mv(`${__dirname}/../front/src/components/Pictures/${file.name}`,err=>{
+        if(err){
+            console.error(err);
+            return res.status(500).send(err);
+        }
+        res.status(201).json({filename:file.name,filepath:`/Pictures/${file.name}`});
+    })
+     
+ }
+    }catch(e){
+        console.log(e);
+    }
+
+})
+
+app.get("/matereq/:id",(req,res)=>{
+    User.findOne({_id:req.params.id})
+    .select("_id name organisation areaofexpert dept passingYear email phone")
+    .then(user=>{
+        res.send(user)
+    })
+    .catch((e)=>{
+        console.log(e);
+    })
+})
+
 app.listen(8000,()=>{
     console.log(`successfully connected `);
 });

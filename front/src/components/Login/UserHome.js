@@ -38,9 +38,7 @@ function UserHome() {
     
         <>
             <Header/>
-            <Usercontext.Provider value={user}>
-            <Mates/>
-            </Usercontext.Provider>
+
          
            
         </>

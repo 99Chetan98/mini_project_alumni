@@ -137,7 +137,7 @@ const savepp=async(e)=>{
         
         
 
-        if(data.status==201){
+        if(data.status==200){
             window.alert("profile picture updated sucessfully");
             history.push("/UserDash/profile");
         }else{

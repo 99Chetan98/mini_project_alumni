@@ -6,7 +6,6 @@ import Open from "../img/eyno.png";
 import Close from "../img/Hide.png";
 import {useHistory} from 'react-router-dom';
 import '../App.css';
-import Footer from './Footer';
 import Head from './Head';
 const Login = () => {
   var open=Open;
@@ -134,7 +133,7 @@ const Login = () => {
         </div>
 
       </div>
-        <Footer/>
+        
         </div>
     )
 }

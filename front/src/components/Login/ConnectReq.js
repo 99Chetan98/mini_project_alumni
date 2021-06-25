@@ -8,6 +8,7 @@ import Loader from './Loader';
 const ConnectReq = () => {
     const history=useHistory();
     const [userdata,setuserdata]=useState([]);
+    const [user,setuser]=useState([]);
     const finbatch=async()=>{
         try{
             const res=await fetch("/userlog",{
@@ -20,7 +21,7 @@ const ConnectReq = () => {
                
             });
             const data=await res.json();
-            
+            setuser(data)
             setuserdata(data.conreq);
 
                    
@@ -53,7 +54,7 @@ const ConnectReq = () => {
                                 return(
                                     <>
                                                 <div className="col-md-3 col-sm-2">     
-                                                    <ConReq user={userdata} id={e.reqc} opid={0} condition={{but:"",text:"Accept"}}/>
+                                                    <ConReq user={user} id={e.reqc} opid={0} condition={{but:"",text:"Accept"}}/>
                                                     </div>
                                     </>
                                 )

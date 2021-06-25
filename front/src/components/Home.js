@@ -9,6 +9,7 @@ import "swiper/components/pagination/pagination.min.css";
 import Login from "./Login";
 import Head from './Head';
 import '../App.css';
+import Footer from './Footer';
 
 
 
@@ -146,13 +147,20 @@ const Home = () => {
                                             sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                                              et dolore magna aliqua. Ut enim ad minim veniam </h4></span>
                                     </div>
-                         
+                                    <h5 style={{textAlign:"right" ,paddingRight:"20px",paddingBottom:"10px"}}>More Events</h5>
                                   </div>
+                                  
                           </div>  
             </div>
 
           </div>
-          
+          <div className="container-fluid y-box">
+            <div className="mbox">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/cbm7W8z3FZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+          </div>
+          <Footer/>
     </>
   )
 }

@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from './Head';
 import '../App.css';
+import Footer from './Footer';
 
 const Register = () => {
   var open=Open;
@@ -319,7 +320,7 @@ const postData=async(e)=>{
                                <div className="form-group">
                                       <label htmlFor="Name">Password</label>
                                       <div className="d-flex"><input type={type} className="form-control pass" value={User.password} onChange={handleInput} name="password" placeholder="Enter Password" autoComplete="false" required/>
-                                      <div id="eye"><img src={img} alt="eye" onClick={Change} style={{    height: '39px',top: '30px',position: 'relative',background:'white'}} /></div></div>
+                                   </div>
                                     </div>
                                     
 
@@ -343,6 +344,7 @@ const postData=async(e)=>{
                     </div>
 
             </div>
+            <Footer/>
         </>
     )
 }

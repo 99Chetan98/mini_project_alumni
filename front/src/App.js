@@ -39,7 +39,7 @@ const App=()=>{
             <Register/>
         </Route>
         <Route exact path="/Regi">
-                 <About/>
+                 
         </Route>
       
         

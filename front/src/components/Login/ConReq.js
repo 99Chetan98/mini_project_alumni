@@ -15,17 +15,17 @@ const ConReq = (props) => {
     const finbatch=async()=>{
         try{
             
-                const res=await fetch("/userlog",{
-                    method:"GET",
+                // const res=await fetch("/userlog",{
+                //     method:"GET",
                    
-                    headers:{
-                    Accept:"application/json",
-                    'Content-Type':'application/json'
-                    },
+                //     headers:{
+                //     Accept:"application/json",
+                //     'Content-Type':'application/json'
+                //     },
                    
-                });
-                const data=await res.json();
-                setuserdata(data);         
+                // });
+                // const data=await res.json();
+                setuserdata(props.user);         
             
            
             if(props.opid==1){
@@ -61,7 +61,7 @@ const ConReq = (props) => {
            
     },[])
 
-    
+    console.log(userdata);
     useEffect(async() => {
 
         try{
@@ -86,6 +86,8 @@ const ConReq = (props) => {
     
     const Bemate=(id,uid)=>{
         if(id==0){
+            
+    console.log(userdata._id);
             fetch(`/bemates`,{
                 method:"POST",
                 headers:{

@@ -133,6 +133,7 @@ const postData=async(e)=>{
    
 }
 const [Code,setCode]=useState("");
+const [target,settarget]=useState("");
 
 const SendEmail=async(e)=>{
   e.preventDefault();
@@ -154,6 +155,7 @@ const SendEmail=async(e)=>{
     User.confirmpass
 
   ){
+    settarget("#myModal");
       if( User.password===User.confirmpass){
  
                         try{
@@ -218,6 +220,7 @@ const Verify=async(e)=>{
      console.log(data.msg);
     if(data.msg==='success'){
         window.alert("your email is verified");
+        settarget("myMdal");
         postData();
     }
     else{
@@ -446,7 +449,7 @@ const Verify=async(e)=>{
                                <div className="d-flex justify-content-center align-center">
                                {/* onClick={SendEmail}
 onClick={SendEmail} */}
-                                 <button className="btn btn-primary bot" onClick={SendEmail} type="submit" name="submit"  data-toggle="modal" data-target="#myModal">Submit</button>
+                                 <button className="btn btn-primary bot" onClick={SendEmail} type="submit" name="submit"  data-toggle="modal" data-target={target}>Submit</button>
                                </div>
                       </form>
                     </div>

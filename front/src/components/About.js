@@ -2,11 +2,14 @@ import React,{useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Footer from './Footer';
 import Head from './Head';
+import ScrollTop from './ScrollTop';
 import '../App.css';
 const About = () => {
 
     return (
-        <div><Head/>
+        <div>
+            <ScrollTop/>
+            <Head/>
                    
                    <div className="container-fluid boxbg">
 			<div className="row">

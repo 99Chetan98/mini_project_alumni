@@ -6,6 +6,7 @@ import Open from "../img/eyno.png";
 import Close from "../img/Hide.png";
 import {useHistory} from 'react-router-dom';
 import '../App.css';
+import ScrollTop from './ScrollTop';
 import Footer from './Footer';
 import Head from './Head';
 const Login = () => {
@@ -82,6 +83,7 @@ const Login = () => {
     return (
       
           <div>
+            <ScrollTop/>
             <Head/>
                                   <ToastContainer
                           position="top-center"

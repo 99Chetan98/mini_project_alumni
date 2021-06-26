@@ -38,10 +38,10 @@ const Footer = () => {
 
                     <ul className="list-unstyled">
                         <li>
-                        <a href="#!"><i className="fa fa-home" aria-hidden="true"></i> Home</a>
+                        <a href="#!"><i className="fa fa-home" aria-hidden="true"></i> Team</a>
                         </li>
                         <li>
-                        <a href="#!"><i className="fa fa-info-circle" aria-hidden="true"></i> About</a>
+                        <a href="#!"><i className="fa fa-info-circle" aria-hidden="true"></i> Feedback</a>
                         </li>
                         <li>
                         <a href="#!"><i className="fa fa-sign-in" aria-hidden="true"></i> Login</a>

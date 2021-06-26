@@ -10,6 +10,7 @@ import Login from "./Login";
 import Head from './Head';
 import '../App.css';
 import Footer from './Footer';
+import ScrollTop from './ScrollTop';
 
 
 
@@ -50,6 +51,7 @@ const Home = () => {
   
   return (
     <>
+    <ScrollTop/>
           <Head/>
           <div className="Home_div"  style={{marginTop:state.div}}>
 
@@ -91,7 +93,7 @@ const Home = () => {
 
                                       <h4>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22.</h4></h1>
                                 </div>
-                                <hr></hr>
+                                <hr style={{margin:"0px"}}></hr>
                                 <div className="newsbox">
                                
                                <i class="fa fa-newspaper-o" aria-hidden="true"></i>
@@ -100,7 +102,7 @@ const Home = () => {
 
                                     <h4>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22.</h4></h1>
                               </div>
-                              <hr></hr>
+                              <hr style={{margin:"0px"}}></hr>
                               <div className="newsbox">
                                
                                <i class="fa fa-newspaper-o" aria-hidden="true"></i>
@@ -127,7 +129,7 @@ const Home = () => {
                                             sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                                              et dolore magna aliqua. Ut enim ad minim veniam </h4></span>
                                     </div>
-<hr></hr>
+<hr style={{margin:"0px"}}></hr>
                                     <div class="efield">
                                           <h2>5 <span>Oct</span></h2>
                                          <span style={{display:"grid"}}>
@@ -137,7 +139,7 @@ const Home = () => {
                                             sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                                              et dolore magna aliqua. Ut enim ad minim veniam </h4></span>
                                     </div>
-                                    <hr></hr>
+                                    <hr style={{margin:"0px"}}></hr>
                                     <div class="efield">
                                           <h2>8 <span>Dec</span></h2>
                                          <span style={{display:"grid"}}>

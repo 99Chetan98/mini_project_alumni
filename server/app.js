@@ -10,9 +10,10 @@ require("./DB/conn.js");
 const authen=require("./middleware/Auth");
 const fileUpload=require('express-fileupload')
 const User=require("./modules/register");
-const { findOne } = require("./modules/register");
-const path=require('path');
 
+var nodemailer = require('nodemailer');
+const path=require('path');
+const Email_data=require("./modules/MailVerification");
 app.use(express.json());
 app.use(cookieParser());
 
@@ -297,6 +298,58 @@ app.get("/matereq/:id",(req,res)=>{
     })
 })
 
+app.post("/send_email",(req,res)=>{
+    var email=req.body.email;
+    var number=Math.floor(Math.random()*(9999-1000))+1;
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'projectx20212022@gmail.com',
+          pass: '@!Nano2506@!'
+        }
+      });
+      
+      var mailOptions = {
+        from:'projectx20212022@gmail.com' ,
+        to: `${email}`,
+        subject: 'Email Verification',
+        text: `your code for verification is ${number}`
+      };
+      
+      transporter.sendMail(mailOptions,async function(error, info){
+        if (error) {
+          res.send(error);
+        } else {
+            try{
+                
+                const verify=new Email_data({
+                    email:email,
+                   
+                        OTP:number
+                   
+             
+                }
+                )
+                const data=await verify.save();
+                res.status(201);
+                
+              console.log('Email sent: ' + info.response);
+            }
+            catch(e){
+                console.log(e)
+            }
+            
+        }
+      });
+})
+app.post("/Verify_OTP",async(req,res)=>{
+        const {email,code}=req.body;
+        const getcode=await Email_data.findOne({email:email,OTP:code});
+        if(getcode){
+            res.status(200).json({"msg":"success"});
+        }
+
+})
 app.listen(8000,()=>{
     console.log(`successfully connected `);
 });

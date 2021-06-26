@@ -5,8 +5,11 @@ import { useHistory} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from './Head';
+import ScrollTop from './ScrollTop';
+import imo from '../img/mail.jpg';
 import '../App.css';
 import Footer from './Footer';
+
 
 const Register = () => {
   var open=Open;
@@ -58,13 +61,13 @@ const Register = () => {
 
     const handleInput=(e)=>{
 
-      console.log(e);
+ 
       name=e.target.name;
       value=e.target.value;
       setUser({...User,[name]:value})
     }
 const postData=async(e)=>{
-  e.preventDefault();
+  
             const {name,
               email,
               phone,
@@ -129,9 +132,113 @@ const postData=async(e)=>{
           }
    
 }
+const [Code,setCode]=useState("");
 
+const SendEmail=async(e)=>{
+  e.preventDefault();
+  console.log("sending email");
+  if(
+    User.name  &&
+    User.email  &&
+    User.phone  &&
+    User.dob  &&
+    User.gender  &&
+    User.add  &&
+    User.association  &&
+    User.dept  &&
+    User.passingYear  &&
+    User.organisation  &&
+    User.designation  &&
+    User.areaofexpert  &&
+    User.password  &&
+    User.confirmpass
+
+  ){
+      if( User.password===User.confirmpass){
+ 
+                        try{
+                          const res= await fetch("/send_email"  &&{
+                              method:"POST",
+                                    headers:{
+                                      'Content-Type':'application/json; charset=utf-8',
+                                      "Access-Control-Allow-Origin": "*",
+                                    },
+                                    body:JSON.stringify({
+                                                email:User.email
+                                    })
+
+                            });
+                            const data=await res.json();
+                            console.log(data); 
+                        }catch(e){
+                          console.log(e);
+                        }
+              }
+              else{
+                toast.error('Password not matching', {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  });
+              }
+    }
+    else{
+      toast.error('All Data Must be filled', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+}
+
+const Verify=async(e)=>{
+  e.preventDefault();
+  try{
+    const res= await fetch("/Verify_OTP",{
+       method:"POST",
+             headers:{
+               'Content-Type':'application/json; charset=utf-8',
+               "Access-Control-Allow-Origin": "*",
+             },
+             body:JSON.stringify({
+                         code:Code,
+                         email:User.email
+             })
+
+     });
+     const data=await res.json();
+     console.log(data.msg);
+    if(data.msg==='success'){
+        window.alert("your email is verified");
+        postData();
+    }
+    else{
+      toast.error('OTP Not Matched', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+ }catch(e){
+   console.log(e);
+ }
+
+
+}
     return (
-        <>       <Head/>
+        <>       <ScrollTop/><Head/>
                       <ToastContainer
                           position="top-center"
                           autoClose={5000}
@@ -146,10 +253,10 @@ const postData=async(e)=>{
             <div className="container-fluid d-flex justify-content-center align-center rgtr_wid" id="top">
                     <div className="regi_box panel-group"  id="accordion">
                       <h2 style={{textAlign:"center",background:'#f4d8b16e',padding:"20px 0px",fontFamily:"Poppins",color:"#6e4205"}}>Registration</h2>
-                      
-                      <form method="POST" onSubmit={postData}>
-                      <h5 id="heading" data-toggle="collapse" data-target="#demo"><i class="fa fa-user" aria-hidden="true"></i> Personal Details</h5>
-                      <div id="demo" class="collapse">
+                      {/* onSubmit={postData}  */}
+                      <form method="POST">
+                      <h5 id="heading" data-toggle="collapse" data-target="#demo"><i className="fa fa-user" aria-hidden="true"></i> Personal Details</h5>
+                      <div id="demo" className="collapse">
                         <div className="row">
                          
                               <div className="col-sm-6">
@@ -199,7 +306,7 @@ const postData=async(e)=>{
                             
                         </div>
                       </div>
-                        <h5 id="heading"  data-toggle="collapse" data-target="#div2"><i class="fa fa-university" aria-hidden="true"></i> College Association Details</h5>
+                        <h5 id="heading"  data-toggle="collapse" data-target="#div2"><i className="fa fa-university" aria-hidden="true"></i> College Association Details</h5>
                         <div className="collapse" id="div2">
                         <div className="row ">
                           <div className="col-sm-4">
@@ -285,7 +392,7 @@ const postData=async(e)=>{
                           </div>
                        
                         </div>
-                        <h5 id="heading"  data-toggle="collapse" data-target="#div3"><i class="fa fa-building" aria-hidden="true"></i> Organisational Details</h5>
+                        <h5 id="heading"  data-toggle="collapse" data-target="#div3"><i className="fa fa-building" aria-hidden="true"></i> Organisational Details</h5>
                           <div className="collapse" id="div3">
                           <div className="row">
                               <div className="col-sm-6">
@@ -337,12 +444,43 @@ const postData=async(e)=>{
                                </div>
                              
                                <div className="d-flex justify-content-center align-center">
-
-                                 <button className="btn btn-primary bot" type="submit" name="submit">Submit</button>
+                               {/* onClick={SendEmail}
+onClick={SendEmail} */}
+                                 <button className="btn btn-primary bot" onClick={SendEmail} type="submit" name="submit"  data-toggle="modal" data-target="#myModal">Submit</button>
                                </div>
                       </form>
                     </div>
 
+            </div>
+          
+            <div className="modal" id="myModal" >
+              <div className="modal-dialog">
+              <button type="button" className="close" data-dismiss="modal" style={{color:"black",position:"relative",zIndex:"999"}}>&times;</button>
+            <div className="modal-content">
+            
+                
+               <div className="d-flex justify-content-center"><img src={imo}  id="mailimg"/></div> 
+          
+                  <div className="modal-head">
+                    
+                    <h4 className="modal-titlee">Verify Your Account</h4>
+                    <h6>We emailed you 4-digit code , enter the code below to confirm your email address</h6>
+                    
+                  </div>
+
+      
+                  <div class="form-group d-flex justify-content-center">
+  
+                    <input type="text" class="form-control mail-field" onChange={e=>setCode(e.target.value)} value={Code} id="usr" maxLength="4" name="username"/>
+                  </div>
+
+          
+                  <div className="modal-footer d-flex justify-content-center">
+                    <button type="button" className="btn btn-light" onClick={Verify}>Verify</button>
+                  </div>
+
+                </div>
+              </div>
             </div>
             <Footer/>
         </>

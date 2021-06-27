@@ -277,7 +277,7 @@ app.post("/upload_pp/:id",async(req,res)=>{
             console.error(err);
             return res.status(500).send(err);
         }
-        res.status(201).json({filename:file.name,filepath:`/Pictures/${file.name}`});
+        res.status(201).json({filename:file.name,filepath:`/Pictures/${file.name}`,state:"updated"});
     })
      
  }

@@ -950,6 +950,6 @@ position: relative;
 #myModal{
   background:rgba(0, 0, 0, 0.646);
 }
-.show{
-  display: none!important;
+.modal-open{
+  overflow-y: scroll!important;
 }

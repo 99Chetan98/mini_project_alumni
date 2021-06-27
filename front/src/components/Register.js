@@ -134,6 +134,7 @@ const postData=async(e)=>{
 }
 const [Code,setCode]=useState("");
 const [target,settarget]=useState("");
+const [model,setmodel]=useState("");
 
 const SendEmail=async(e)=>{
   e.preventDefault();
@@ -155,11 +156,12 @@ const SendEmail=async(e)=>{
     User.confirmpass
 
   ){
-    settarget("#myModal");
+   
       if( User.password===User.confirmpass){
- 
+        settarget("#myModal");
+        setmodel("modal")
                         try{
-                          const res= await fetch("/send_email"  &&{
+                          const res= await fetch("/send_email",{
                               method:"POST",
                                     headers:{
                                       'Content-Type':'application/json; charset=utf-8',
@@ -223,7 +225,8 @@ const Verify=async(e)=>{
         settarget("myMdal");
         postData();
     }
-    else{
+    else if(data.msg==='not'){
+     
       toast.error('OTP Not Matched', {
         position: "top-center",
         autoClose: 5000,
@@ -449,7 +452,7 @@ const Verify=async(e)=>{
                                <div className="d-flex justify-content-center align-center">
                                {/* onClick={SendEmail}
 onClick={SendEmail} */}
-                                 <button className="btn btn-primary bot" onClick={SendEmail} type="submit" name="submit"  data-toggle="modal" data-target={target}>Submit</button>
+                                 <button className="btn btn-primary bot" onClick={SendEmail} type="submit" name="submit"  data-toggle={model} data-target={target}>Submit</button>
                                </div>
                       </form>
                     </div>

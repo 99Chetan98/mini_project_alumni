@@ -348,6 +348,9 @@ app.post("/Verify_OTP",async(req,res)=>{
         if(getcode){
             res.status(200).json({"msg":"success"});
         }
+        else{
+            res.json({"msg":"not"});
+        }
 
 })
 app.listen(8000,()=>{

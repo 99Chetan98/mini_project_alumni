@@ -952,4 +952,5 @@ position: relative;
 }
 .modal-open{
   overflow-y: scroll!important;
+  padding: 0px !important;
 }

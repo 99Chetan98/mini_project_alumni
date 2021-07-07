@@ -53,6 +53,10 @@ const regi_schema=new mongoose.Schema({
         type:String,
         required:true
     },
+    Access:{
+        type:String,
+        required:true
+    },
     password:
     {
         type:String,
@@ -111,6 +115,6 @@ regi_schema.pre('save',async function(next){
     }
     next();
 });
-const User=mongoose.model("Alumni Registration",regi_schema);
+const User=mongoose.model("Alumni_Registration",regi_schema);
 
 module.exports=User;

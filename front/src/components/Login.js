@@ -40,30 +40,49 @@ const Login = () => {
       e.preventDefault();
       if(email && password){
                             
-      const res=await fetch("/login",{
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json; charset=utf-8'
-        },
-        body:JSON.stringify({email,password})
+              const res=await fetch("/login",{
+                method:"POST",
+                headers:{
+                  'Content-Type':'application/json; charset=utf-8'
+                },
+                body:JSON.stringify({email,password})
 
-      })
-      const data=res.json();
-      if(res.status===400){
-        toast.error('Inavlid Credentials', {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          });
-      }
-      else{
-      
-        history.push("/UserDash/Profile");
-      }
+              })
+              const data=await res.json();
+              console.log(data);
+
+              if(data.msg==="invalid"){
+                    toast.error('Inavlid Credentials', {
+                      position: "bottom-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      });
+              }
+              else{
+                      if(data.msg==="login"){
+                        
+                        history.push("/UserDash/Profile");
+                      }
+                      else if(data.msg==="pending"){
+                        history.push("/UserDash/Pending");
+                      }
+                      else{
+                        toast.error('Inavlid Credentials', {
+                          position: "bottom-right",
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          });
+                       }
+                // history.push("/UserDash/Profile");
+              }
 
       }
       else{

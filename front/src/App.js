@@ -6,10 +6,8 @@ import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
 import Userlog from './components/Login/UserHome';
-
 import Notification from './components/Login/Notification';
 import Profile from './components/Login/Profile';
-
 import Find from  './components/Login/BatchConn';
 import Logout from  './components/Logout';
 import  Batch_Profile from  './components/Login/Batch_Profile';
@@ -18,6 +16,11 @@ import  Mates from  './components/Login/Mates';
 import EditProfile from './components/Login/EditProfile';
 import  ConnectReq from  './components/Login/ConnectReq';
 import  Mate_profile from  './components/Login/Mate_profile';
+import Admin from './components/Admin/Admin';
+import AdminPanel from './components/Admin/AdminPanel';
+import Verification from './components/Admin/Verification';
+import AccessPending from  './components/AccessPending';
+import PostEvent from './components/Admin/PostEvent';
 const App=()=>{
     
   return(
@@ -25,9 +28,7 @@ const App=()=>{
 
         
         
-        <Route exact path="/">
-            <Home/>
-        </Route>
+        <Route exact path="/"> <Home/> </Route>
         <Route exact path="/About">
             <About/>
         </Route>
@@ -49,7 +50,7 @@ const App=()=>{
         </Route>
         
             
-        <Route exact path="/UserDash/profile">
+        <Route exact path="/UserDash/Profile">
                 <Profile name={'userdata'}/>
             </Route>
             <Route exact path="/UserDash/Notification">
@@ -80,6 +81,22 @@ const App=()=>{
             </Route>
             <Route exact path="/UserDash/Mate_profile">
                 <Mate_profile/>
+            </Route>
+
+            <Route exact path="/admin">
+                <Admin/>
+            </Route>
+            <Route exact path="/AdminPanel">
+                <AdminPanel/>
+            </Route>
+            <Route exact path="/Verification_Request">
+                <Verification/>
+            </Route>
+            <Route exact path="/UserDash/Pending">
+                <AccessPending/>
+            </Route>
+            <Route exact path="/Post_Event">
+                <PostEvent/>
             </Route>
             
     </>

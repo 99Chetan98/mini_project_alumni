@@ -10,7 +10,8 @@ require("./DB/conn.js");
 const authen=require("./middleware/Auth");
 const fileUpload=require('express-fileupload')
 const User=require("./modules/register");
-
+const Admin=require("./modules/admin");
+const Admin_auth=require('./middleware/Admin_auth');
 var nodemailer = require('nodemailer');
 const path=require('path');
 const Email_data=require("./modules/MailVerification");
@@ -23,6 +24,7 @@ app.get("/",(req,res)=>{
 
 app.post("/send_data",async(req,res)=>{
     try{
+        var Access="pending";
         const { name,
             email,
             phone,
@@ -35,6 +37,7 @@ app.post("/send_data",async(req,res)=>{
             organisation,
             designation,
             areaofexpert,
+        
             password,
             confirmpass}=req.body;
         const register=new User({
@@ -50,6 +53,7 @@ app.post("/send_data",async(req,res)=>{
             organisation,
             designation,
             areaofexpert,
+            Access,
             password,
             confirmpass
         });
@@ -79,16 +83,19 @@ app.post("/login",async(req,res)=>{
             const check=await bcrypt.compare(password,find.password);
 
             if(check){
+                if(find.Access=="pending"){
+                    res.json({"msg":"pending"});
+                }
                 const token=await find.generateAuthToken();
                 console.log(`token is ${token}`);
                 res.cookie("token",token,{
                 httpOnly:true
                  });
-                res.send("login successfully");
-            
+                res.json({"msg":"login"});
+                
             }
             else{
-                res.status(400).send("invalid credentials");
+                res.json({"msg":"invalid"}).status(400).send("invalid credentials");
             }
 
         }
@@ -353,6 +360,116 @@ app.post("/Verify_OTP",async(req,res)=>{
         }
 
 })
+
+app.post("/Admin_login",async(req,res)=>{
+    try{
+        const email=req.body.username;
+        const pass=req.body.Pass;
+
+
+        if(!email && !pass){
+            res.status(400).send("fill data");
+        }
+
+        const find_admin=await Admin.findOne({email:email});
+        if(find_admin){
+            const check=await bcrypt.compare(pass,find_admin.password);
+            if(check){
+                const token=await find_admin.generateAuthToken();
+                console.log(`token us ${token}`);
+                res.cookie("Admin_token",token,{
+                    httpOnly:true
+                });
+                res.status(200).json({"msg":"logged"});
+            }
+            else{
+                res.status(400).send("invalid credentials / pass");
+            }
+
+        }
+        else{
+            res.status(400).send("invalid credentials //");
+        }
+
+
+    }
+    catch(e){
+        console.log(e);
+    }
+
+})
+
+app.get("/Admin_logged",Admin_auth,(req,res)=>{
+    res.status(200).send(req.getuser);
+})
+
+app.get("/registered_data",Admin_auth,(req,res)=>{
+    User.find()
+    .select("id name Access email phone dob gender add association dept passingYear organisation designation areaofexpert")
+    .then(users=>{
+        res.send(users);
+    })
+    .catch(e=>{
+        console.log(e);
+    })
+})
+
+app.post("/Verify",async(req,res)=>{
+    try{
+        order=req.body.str;
+        _id=req.body.id;
+        if(order=="verify"){
+            const userveri=await User.updateOne({_id},{$set:{Access:"grant"}});
+            
+            if(userveri){
+                res.status(201).send("verified");
+                var email=req.body.email;
+                
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                      user: 'projectx20212022@gmail.com',
+                      pass: '@!Nano2506@!'
+                    }
+                  });
+                  
+                  var mailOptions = {
+                    from:'projectx20212022@gmail.com' ,
+                    to: `${email}`,
+                    subject: 'Account Verified',
+                    text: `your acount was verified you can login now`
+                  };
+                  
+                  transporter.sendMail(mailOptions,async function(error, info){
+                    if (error) {
+                      res.send(error);
+                    } 
+                  });
+            }else{
+                res.status(400).send("problem while verifying");
+            }
+
+        }
+        else if(order=="decline"){
+            const userveri=await User.updateOne({_id},{$set:{Access:"denied"}});
+            
+            if(userveri){
+                res.status(200).send("verified");
+            }else{
+                res.status(400).send("problem while verifying");
+            }
+        }
+        else{
+            res.status(400).send("invalid");
+        }
+
+
+    }catch(e){
+        console.log(e);
+    }
+})
+
+
 app.listen(8000,()=>{
     console.log(`successfully connected `);
 });

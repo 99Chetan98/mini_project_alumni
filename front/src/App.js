@@ -21,6 +21,7 @@ import AdminPanel from './components/Admin/AdminPanel';
 import Verification from './components/Admin/Verification';
 import AccessPending from  './components/AccessPending';
 import PostEvent from './components/Admin/PostEvent';
+import PostNews from './components/Admin/PostNews';
 const App=()=>{
     
   return(
@@ -97,6 +98,9 @@ const App=()=>{
             </Route>
             <Route exact path="/Post_Event">
                 <PostEvent/>
+            </Route>
+            <Route exact path="/Post_News">
+                <PostNews/>
             </Route>
             
     </>

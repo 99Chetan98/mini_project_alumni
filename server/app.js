@@ -11,6 +11,8 @@ const authen=require("./middleware/Auth");
 const fileUpload=require('express-fileupload')
 const User=require("./modules/register");
 const Admin=require("./modules/admin");
+const Event=require('./modules/Event');
+const News=require('./modules/News');
 const Admin_auth=require('./middleware/Admin_auth');
 var nodemailer = require('nodemailer');
 const path=require('path');
@@ -468,7 +470,65 @@ app.post("/Verify",async(req,res)=>{
         console.log(e);
     }
 })
+app.post("/PostEvent",async(req,res)=>{
+    try{
+        const {
+            Heading,
+            Date,
+            Time,
+            Dis
+        }=req.body;
 
+        const post_event=new Event({
+            heading:Heading,
+            date:Date,
+            time:Time,
+            discription:Dis
+
+        });
+
+        const post=await post_event.save();
+        if(post){
+            res.status(201).json({"msg":"posted"});
+        }
+        else{
+            res.status(400);
+        }
+
+
+    }catch(e){
+        console.log(e);
+    }
+})
+
+
+app.post("/PostNews",async(req,res)=>{
+    try{
+        const {
+            Heading,
+            Dis
+        }=req.body;
+        
+        const post_event=new News({
+            heading:Heading,
+            date:new Date(),
+            discription:Dis
+
+        });
+
+        const post=await post_event.save();
+        if(post){
+            res.status(201).json({"msg":"posted"});
+        }
+        else{
+            res.status(400);
+        }
+
+
+    }catch(e){
+        console.log(e);
+    }
+})
 
 app.listen(8000,()=>{
     console.log(`successfully connected `);

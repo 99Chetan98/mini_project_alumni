@@ -2,13 +2,15 @@ import React,{useState} from 'react';
 import './Admin.css';
 import Admin_nav from './Admin_nav';
 import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from 'react-router';
 import 'react-toastify/dist/ReactToastify.css';
 
-const PostEvent = () => {
+const PostNews = () => {
+    const history=useHistory();
     const [data,setdata]=useState({
         Heading:"",
         Date:"",
-        Time:"",
+      
         Dis:""
 
 
@@ -24,10 +26,10 @@ const PostEvent = () => {
         const {
             Heading,
             Date,
-            Time,
+          
             Dis
         }=data;
-        if(!Heading && !Date && !Time && !Dis){
+        if(!Heading && !Date && !Dis){
             toast.error('Please Fill All Data', {
                 position: "top-center",
                 autoClose: 5000,
@@ -41,7 +43,7 @@ const PostEvent = () => {
         else{
                     try{
 
-                        const res=await fetch("/PostEvent",{
+                        const res=await fetch("/PostNews",{
                             method:"POST",
                             headers:{
                                 'Content-Type':'application/json; charset=utf-8',
@@ -49,8 +51,6 @@ const PostEvent = () => {
                             },
                             body:JSON.stringify({
                                 Heading,
-                                Date,
-                                Time,
                                 Dis
                             })
                         })
@@ -59,8 +59,6 @@ const PostEvent = () => {
                             window.alert("event added");
                             setdata({
                                 Heading:"",
-                                Date:"",
-                                Time:"",
                                 Dis:""
                             });
                         }
@@ -92,34 +90,20 @@ const PostEvent = () => {
                       />
             <div className="container">
                     <div className="EventForm">
-                        <h3 id="eventHeading">Post Event</h3>
+                        <h3 id="eventHeading">Post News</h3>
                         <hr></hr>
                             <form action="" className="eventForm">
                                 <div className="row">
-                                    <div className="col-sm-6">
+                                    <div className="col-sm-12">
                                          <div className="form-group">
-                                             <label for="uname">Event Heading</label>
+                                             <label for="uname">News Heading</label>
                                             <input type="text" className="form-control" value={data.Heading} onChange={HandleChange} style={{background:"white"}} id="uname" placeholder="Enter heading" name="Heading" required/>
                                          </div>
                                     </div>
-                                    <div className="col-sm-3">
-                                         <div className="form-group">
-                                             <label for="uname">Date</label>
-                                            <input type="date" className="form-control" value={data.Date} onChange={HandleChange}  style={{background:"white"}} id="uname" placeholder="Enter Date" name="Date" required/>
-                                         </div>
 
-                                    </div>
-
-                                    <div className="col-sm-3">
-                                         <div className="form-group">
-                                             <label for="uname">Time</label>
-                                            <input type="time" className="form-control" value={data.Time} onChange={HandleChange}  style={{background:"white"}} id="uname" placeholder="Enter Time" name="Time" required/>
-                                         </div>
-
-                                    </div>
                                     <div className="col-sm-12">
                                          <div className="form-group">
-                                             <label for="uname">Event Discription</label>
+                                             <label for="uname">Discription</label>
                                             <textarea className="form-control" value={data.Dis} onChange={HandleChange}   rows="10" cols="50" style={{background:"white"}} id="uname" placeholder="Enter Discription" name="Dis" required/>
                                          </div>
 
@@ -135,4 +119,4 @@ const PostEvent = () => {
     )
 }
 
-export default PostEvent
+export default PostNews

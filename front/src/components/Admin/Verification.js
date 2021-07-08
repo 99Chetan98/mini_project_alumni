@@ -63,19 +63,30 @@ const Verification = () => {
         
     }
 
+    const Accsess=(str)=>{
+            if(str=="grant"){
+                history.push("/Verification_data/grant");
+            }
+            else{
+                history.push("/Verification_data/denied");
+            }
+    }
 
     return (
         <>
             <Admin_nav/>
             <div className="container-fluid veri-bg">
+            <button className="btn btn-success" onClick={()=>Accsess("grant")} style={{margin:"30px 10px 10px 40px"}}>Verified data</button>
+                    <button className="btn btn-danger" onClick={()=>Accsess("denied")} style={{margin:"30px 10px 10px 20px"}}>Denied data</button>
+                    <hr></hr>
                 <div className="row">
                     {
                             users.map((e,key)=>{
                                 if(e.Access==="pending"){
                                     return(
-                                        <div className="col-sm-4 d-flex justify-content-center" key={key}>
+                                        <div className="col-sm-4 d-flex justify-content-center" style={{marginBottom:"30px"}} key={key}>
                                         <div className="veribox">
-                                            <h4 className="userName"><i class="fa fa-user-circle" aria-hidden="true"></i> {e.name}</h4>
+                                            <h4 className="userName"><i class="fa fa-user-circle" aria-hidden="true"></i> {e.name} <span style={{fontSize:"15px"}}>({e.dept })</span></h4>
                                             <h5>Passing Year : {e.passingYear}  |  Assocaition : {e.association}</h5><hr></hr>
                                             <div className="d-flex" style={{justifyContent:"flex-end"}}>
                                                         <button className="btn btn-outline-danger butns" onClick={()=>VerifyUser("decline",e._id,e.email)}>Decline</button>

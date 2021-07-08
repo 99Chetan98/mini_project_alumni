@@ -90,7 +90,7 @@ const PostNews = () => {
                       />
             <div className="container">
                     <div className="EventForm">
-                        <h3 id="eventHeading">Post News</h3>
+                        <div className="d-flex"><h3 id="eventHeading">Post News</h3> <button className="btn btn-outline-primary" style={{marginLeft:"15px"}} onClick={()=>history.push("/All_News")}>Veiw all</button></div>
                         <hr></hr>
                             <form action="" className="eventForm">
                                 <div className="row">

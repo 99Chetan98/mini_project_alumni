@@ -17,8 +17,10 @@ const Admin_auth=require('./middleware/Admin_auth');
 var nodemailer = require('nodemailer');
 const path=require('path');
 const Email_data=require("./modules/MailVerification");
+var dateFormat = require('dateformat');
 app.use(express.json());
 app.use(cookieParser());
+
 
 app.get("/",(req,res)=>{
     res.send("Hello World");
@@ -88,6 +90,9 @@ app.post("/login",async(req,res)=>{
                 if(find.Access=="pending"){
                     res.json({"msg":"pending"});
                 }
+                else if(find.Access=="denied"){
+                    res.json({"msg":"denied"});
+                }
                 const token=await find.generateAuthToken();
                 console.log(`token is ${token}`);
                 res.cookie("token",token,{
@@ -121,8 +126,8 @@ app.get("/userlog",authen,(req,res)=>{
 
 app.post("/find",(req,res)=>{
 
-            
-            let userpattern=new RegExp("^"+req.body.search);
+            const str=req.body.search;
+            let userpattern=new RegExp("^"+str.toLowerCase());
             User.find({name:{$regex:userpattern}})
             .select("_id name")
             .then(user=>{
@@ -379,7 +384,7 @@ app.post("/Admin_login",async(req,res)=>{
             if(check){
                 const token=await find_admin.generateAuthToken();
                 console.log(`token us ${token}`);
-                res.cookie("Admin_token",token,{
+                res.cookie("token",token,{
                     httpOnly:true
                 });
                 res.status(200).json({"msg":"logged"});
@@ -511,7 +516,7 @@ app.post("/PostNews",async(req,res)=>{
         
         const post_event=new News({
             heading:Heading,
-            date:new Date(),
+            date:dateFormat(new Date(), "dddd, mmmm dS, yyyy, h:MM TT"),
             discription:Dis
 
         });
@@ -530,6 +535,92 @@ app.post("/PostNews",async(req,res)=>{
     }
 })
 
+app.get("/GetNews",async(req,res)=>{
+    try{
+        const data=await News.find().sort({_id:-1});
+        res.send(data);
+    }catch(e){
+        console.log(e);
+    }
+})
+
+app.get("/GetEvents",async(req,res)=>{
+    try{
+        const data=await Event.find().sort({_id:-1});
+        res.send(data);
+    }catch(e){
+        console.log(e);
+    }
+})
+
+app.get("/indEvent/:id",async(req,res)=>{
+    try{
+
+        const data=await Event.findOne({_id:req.params.id});
+        res.send(data);
+    }catch(e){
+        console.log(e);
+    }
+})
+app.post("/EventUpdate",async(req,res)=>{
+    try{
+        const {Heading,Date,Time,Dis}=req.body;
+        const data=await Event.updateOne({_id:req.body.id},{$set:{"heading":Heading,"date":Date,"Time":Time,"discription":Dis}});
+        if(data){res.json({"msg":"posted"});}
+    }catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/deleteEve",async(req,res)=>{
+    try{
+        
+        const data=await Event.deleteOne({_id:req.body.id});
+        if(data){res.json({"msg":"deleted"});}
+    }catch(e){
+        console.log(e);
+    }
+})
+
+app.get("/GetNews",async(req,res)=>{
+    try{
+        const data=await News.find().sort({_id:-1});
+        res.send(data);
+    }catch(e){
+        console.log(e);
+    }
+})
+
+
+app.get("/indNews/:id",async(req,res)=>{
+    try{
+
+        const data=await News.findOne({_id:req.params.id});
+        res.send(data);
+    }catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/UpdateNews",async(req,res)=>{
+    try{
+        const {Heading,Dis,id}=req.body;
+        const data=await News.updateOne({_id:id},{$set:{"heading":Heading,"discription":Dis}});
+        if(data){res.json({"msg":"posted"});}
+    }catch(e){
+        console.log(e);
+    }
+})
+
+app.post("/deleteNews",async(req,res)=>{
+    try{
+        
+        const data=await News.deleteOne({_id:req.body.id});
+        if(data){res.json({"msg":"deleted"});}
+    }catch(e){
+        console.log(e);
+    }
+})
 app.listen(8000,()=>{
     console.log(`successfully connected `);
 });

@@ -1,26 +1,56 @@
-import React,{useState} from 'react';
-import './Admin.css';
 import Admin_nav from './Admin_nav';
-import { useHistory } from 'react-router';
+import React,{useState,useEffect} from 'react';
+import { useParams ,useHistory} from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './Admin.css';
 
-const PostEvent = () => {
+const Edit_Event = () => {
     var history=useHistory();
-    const [data,setdata]=useState({
+    const {id}=useParams();
+    var [Event,setEvent]=useState([]);
+    var [data,setdata]=useState({
         Heading:"",
         Date:"",
         Time:"",
-        Dis:""
+        Dis:"",
 
 
     });
+    useEffect(async() => {
+            try{
+                    const res=await fetch(`/indEvent/${id}`,{
+                        method:"GET",
+                        headers:{
+                            Accept:"application/json",
+                            'Content-Type':'application/json'
+                            }
+                    });
+
+                    const data=await res.json();
+                   
+                    setEvent(data);
+                    setdata({
+                        Heading:data.heading,
+                        Date:data.date,
+                        Time:data.time,
+                        Dis:data.discription,
+                    })
+                    
+            }catch(e){
+                console.log(e);
+            }
+
+    }, [])
+  
+
     const HandleChange=(e)=>{
         const name=e.target.name;
         const value=e.target.value;
 
         setdata({...data,[name]:value});
     }
+
     const SubmitEvent=async(e)=>{
         e.preventDefault();
         const {
@@ -43,7 +73,7 @@ const PostEvent = () => {
         else{
                     try{
 
-                        const res=await fetch("/PostEvent",{
+                        const res=await fetch("/EventUpdate",{
                             method:"POST",
                             headers:{
                                 'Content-Type':'application/json; charset=utf-8',
@@ -53,18 +83,15 @@ const PostEvent = () => {
                                 Heading,
                                 Date,
                                 Time,
-                                Dis
+                                Dis,
+                                id
                             })
                         })
                         const da=await res.json();
                         if(da.msg=="posted"){
-                            window.alert("event added");
-                            setdata({
-                                Heading:"",
-                                Date:"",
-                                Time:"",
-                                Dis:""
-                            });
+                            window.alert("event updated");
+                            history.push("/All_Event");
+                            
                         }
                         else{
                             window.alert("Problem while adding event");
@@ -77,11 +104,15 @@ const PostEvent = () => {
             }
 
     }
-    return (
-        <>
 
-        <Admin_nav/>
-        <ToastContainer
+
+
+
+
+    return (
+        <div>
+            <Admin_nav/>
+            <ToastContainer
                           position="top-center"
                           autoClose={5000}
                           hideProgressBar={false}
@@ -94,7 +125,7 @@ const PostEvent = () => {
                       />
             <div className="container">
                     <div className="EventForm">
-                        <span className="d-flex"><h3 id="eventHeading">Post Event</h3> <button className="btn btn-outline-primary" style={{marginLeft:"15px"}} onClick={()=>history.push("/All_Event")}>Veiw all</button></span>
+                        <span className="d-flex"><h3 id="eventHeading">Edit Event</h3> <button className="btn btn-outline-primary" style={{marginLeft:"15px"}} onClick={()=>history.push("/All_Event")}>Back</button></span>
                         <hr></hr>
                             <form action="" className="eventForm">
                                 <div className="row">
@@ -129,12 +160,13 @@ const PostEvent = () => {
 
 
                                 </div>
-                               <div className="d-flex justify-content-center"><button className="btn btn-primary eventbut" onClick={SubmitEvent}>Submit</button></div>
+                               <div className="d-flex justify-content-center"><button className="btn btn-primary eventbut" onClick={SubmitEvent}>Update</button></div>
                             </form>
                     </div>
             </div>
-        </>
+            
+        </div>
     )
 }
 
-export default PostEvent
+export default Edit_Event

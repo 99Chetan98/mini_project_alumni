@@ -270,7 +270,7 @@ const Verify=async(e)=>{
                               <div className="col-sm-6">
                                   <div className="form-group">
                                       <label htmlFor="Name"> Name</label>
-                                      <input type="text" className="form-control" value={User.name} onChange={handleInput}  id="name" placeholder="Enter Name" style={{textTransform:"capitalize"}} name="name" required/>
+                                      <input type="text" className="form-control" value={User.name} onChange={handleInput}  id="name" placeholder="Enter Name" name="name" required/>
                                     </div>
                               </div>
                               <div className="col-sm-6">

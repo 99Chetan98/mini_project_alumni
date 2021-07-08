@@ -1,12 +1,13 @@
 import React,{useEffect,useState} from 'react';
-import { useHistory } from 'react-router';
+import { useHistory ,useParams} from 'react-router';
 import Admin_nav from './Admin_nav';
 import './Admin.css';
 import MaterialTable from 'material-table';
 
-const AdminPanel = () => {
+const Veri_data = (props) => {
     const history=useHistory();
     const [users,setusers]=useState([]);
+    const  id = useParams();
     useEffect(async() => {
         try{
             const res=await fetch("/registered_data",{
@@ -17,7 +18,7 @@ const AdminPanel = () => {
                     }
             });
             const data=await res.json();
-         console.log(res.status);
+         
             setusers(data);
             if(res.status!=200){
                 history.push("/admin");
@@ -49,15 +50,15 @@ const AdminPanel = () => {
         
 
     ]
-
+var temp=0;
 const all=[10,50,users.length];
-
+console.log(id.access);
     return (
         <>
             <Admin_nav/>
             <div className="panel_body">
                 <div className="container-fluid table-bg">
-
+        
                 <MaterialTable
                 rowsPerPageOptions={all}
                     options={{
@@ -65,8 +66,8 @@ const all=[10,50,users.length];
                         filtering: true
 
                       }}
-                title="Alumni Registration"
-                    data={users}
+                title={`Registration ${id.access}`}
+                    data={users.filter((users)=>{return users.Access==`${id.access}`})}
                     columns={columns}
                 />
                 </div>
@@ -75,4 +76,4 @@ const all=[10,50,users.length];
     )
 }
 
-export default AdminPanel
+export default Veri_data

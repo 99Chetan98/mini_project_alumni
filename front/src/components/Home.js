@@ -11,6 +11,8 @@ import Head from './Head';
 import '../App.css';
 import Footer from './Footer';
 import ScrollTop from './ScrollTop';
+import NewsRoom from './NewsRoom';
+import Events from './Events';
 
 
 
@@ -82,76 +84,13 @@ const Home = () => {
           <div className="container-fluid">
             <div className="row news">
                           <div className="col-sm-6">
-                          
-                          <div className="Nbox">
-                          <h1>News Room</h1>
-                                <div className="newsbox">
-                               
-                                 <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-                                 <h1>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22
-                                      <h5>May 21, 2021</h5>
+                          <NewsRoom/>
 
-                                      <h4>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22.</h4></h1>
-                                </div>
-                                <hr style={{margin:"0px"}}></hr>
-                                <div className="newsbox">
-                               
-                               <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-                               <h1>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22
-                                    <h5>May 21, 2021</h5>
-
-                                    <h4>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22.</h4></h1>
-                              </div>
-                              <hr style={{margin:"0px"}}></hr>
-                              <div className="newsbox">
-                               
-                               <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-                               <h1>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22
-                                    <h5>May 21, 2021</h5>
-
-                                    <h4>Call for nominations for felicitation of distinguished alumni as “JNEC Abhiman” for the year 2021-22.</h4></h1>
-                              </div>
-                            
-                                <h3 style={{textAlign:"end",paddingRight:"30px"}}>Read more</h3>
-                                
-                                </div>
                                 
                           </div>
                           <div className="col-sm-6">
-                                  <div className="ebox">
-                                  <h1>Events</h1>
-                                    <div class="efield">
-                                          <h2>8 <span>Dec</span></h2>
-                                         <span style={{display:"grid"}}>
-                                          <h2 id="texte">ANUBANDH</h2>
-                                          <h6>8th Jan 2021, 6:30 pm (IST)</h6>
-                                          <h4>Anubandh is alumni connect program shedule with industry connectLorem ipsum dolor 
-                                            sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                                             et dolore magna aliqua. Ut enim ad minim veniam </h4></span>
-                                    </div>
-<hr style={{margin:"0px"}}></hr>
-                                    <div class="efield">
-                                          <h2>5 <span>Oct</span></h2>
-                                         <span style={{display:"grid"}}>
-                                          <h2 id="texte">JNEC Abhimaan</h2>
-                                          <h6>5th oct 2021, 6:30 pm (IST)</h6>
-                                          <h4>Anubandh is alumni connect program shedule with industry connectLorem ipsum dolor 
-                                            sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                                             et dolore magna aliqua. Ut enim ad minim veniam </h4></span>
-                                    </div>
-                                    <hr style={{margin:"0px"}}></hr>
-                                    <div class="efield">
-                                          <h2>8 <span>Dec</span></h2>
-                                         <span style={{display:"grid"}}>
-                                          <h2 id="texte">ANUBANDH</h2>
-                                          <h6>8th Jan 2021, 6:30 pm (IST)</h6>
-                                          <h4>Anubandh is alumni connect program shedule with industry connectLorem ipsum dolor 
-                                            sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                                             et dolore magna aliqua. Ut enim ad minim veniam </h4></span>
-                                    </div>
-                                    <h5 style={{textAlign:"right" ,paddingRight:"20px",paddingBottom:"10px"}}>More Events</h5>
-                                  </div>
-                                  
+
+                                  <Events/>
                           </div>  
             </div>
 

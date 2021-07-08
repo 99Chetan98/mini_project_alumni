@@ -22,6 +22,18 @@ import Verification from './components/Admin/Verification';
 import AccessPending from  './components/AccessPending';
 import PostEvent from './components/Admin/PostEvent';
 import PostNews from './components/Admin/PostNews';
+import Veri_data from './components/Admin/Veri_data';
+import All_Event from './components/Admin/All_Event';
+import Edit_Event from './components/Admin/Edit_Event';
+import View_Event from './components/Admin/View_Event';
+import All_News from './components/Admin/All_News';
+import Edit_News from './components/Admin/Edit_News';
+import View_News from './components/Admin/View_News';
+import All_newsroom from './components/All_newsroom';
+import News from './components/News';
+import AllEve from './components/AllEvents';
+import IndiEvents from './components/IndiEvents';
+import Declined from './components/Declined';
 const App=()=>{
     
   return(
@@ -102,7 +114,47 @@ const App=()=>{
             <Route exact path="/Post_News">
                 <PostNews/>
             </Route>
+            <Route exact path="/Verification_data/:access">
+                <Veri_data/>
+            </Route>
+            <Route exact path="/All_Event">
+                <All_Event/>
+            </Route>
+       
+            <Route exact path="/Edit_Event/:id">
+                <Edit_Event/>
+            </Route>
+           
+                   
+            <Route exact path="/View_Event/:id">
+                <View_Event/>
+            </Route>
+            <Route exact path="/All_News">
+                <All_News/>
+            </Route>
+            <Route exact path="/Edit_News/:id">
+                <Edit_News/>
+            </Route>
+            <Route exact path="/View_News/:id">
+                <View_News/>
+            </Route>
+            <Route exact path="/All_NewsRooms">
+                <All_newsroom/>
+            </Route>
+            <Route exact path="/News/:id">
+                <News/>
+            </Route>
+            <Route exact path="/AllEvents">
+                <AllEve/>
+            </Route>
+            <Route exact path="/EventInformation/:id">
+                <IndiEvents/>
+            </Route>
+         
             
+            <Route exact path="/UserDash/Declined">
+                <Declined/>
+            </Route>
     </>
     
   );

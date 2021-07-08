@@ -71,15 +71,7 @@ const Login = () => {
                         history.push("/UserDash/Pending");
                       }
                       else{
-                        toast.error('Inavlid Credentials', {
-                          position: "bottom-right",
-                          autoClose: 5000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: true,
-                          draggable: true,
-                          progress: undefined,
-                          });
+                        history.push("/UserDash/Declined");
                        }
                 // history.push("/UserDash/Profile");
               }

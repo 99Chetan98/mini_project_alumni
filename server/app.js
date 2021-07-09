@@ -327,7 +327,7 @@ app.post("/send_email",(req,res)=>{
         from:'projectx20212022@gmail.com' ,
         to: `${email}`,
         subject: 'Email Verification',
-        text: `your code for verification is ${number}`
+        text: `Your code for verification is ${number}. Now, please wait we will verify your details and as we verify you will get an email for same. `
       };
       
       transporter.sendMail(mailOptions,async function(error, info){
@@ -444,7 +444,7 @@ app.post("/Verify",async(req,res)=>{
                     from:'projectx20212022@gmail.com' ,
                     to: `${email}`,
                     subject: 'Account Verified',
-                    text: `your acount was verified you can login now`
+                    text: `Your account is now verified, you can login now. <br> Thank You for your patience`
                   };
                   
                   transporter.sendMail(mailOptions,async function(error, info){

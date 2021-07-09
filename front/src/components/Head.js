@@ -86,7 +86,7 @@ const Head=()=>{
                   <li><NavLink  to="/About">About</NavLink></li>
                   <li><NavLink  to="/Login">Login</NavLink></li>
                   <li><NavLink  to="/Register">Register</NavLink></li>
-                  <li><NavLink  to="/Regi">Gallery</NavLink></li>
+                  <li><NavLink  to="/admin">Admin</NavLink></li>
                   
               </ul>
           </div>

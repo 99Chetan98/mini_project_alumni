@@ -258,6 +258,7 @@ border-radius: 30px;
     top: 50px;
 }
 .userName{
+    text-transform: capitalize;
     padding: 10px 0px 5px 10px;
     font-family: 'Poppins', sans-serif;
 }

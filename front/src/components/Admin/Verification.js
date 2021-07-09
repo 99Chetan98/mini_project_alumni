@@ -86,7 +86,7 @@ const Verification = () => {
                                     return(
                                         <div className="col-sm-4 d-flex justify-content-center" style={{marginBottom:"30px"}} key={key}>
                                         <div className="veribox">
-                                            <h4 className="userName"><i class="fa fa-user-circle" aria-hidden="true"></i> {e.name} <span style={{fontSize:"15px"}}>({e.dept })</span></h4>
+                                            <h4 className="userName"><i class="fa fa-user-circle" aria-hidden="true"></i> {e.name} <span style={{fontSize:"15px",textTransform:"uppercase"}}>({e.dept })</span></h4>
                                             <h5>Passing Year : {e.passingYear}  |  Assocaition : {e.association}</h5><hr></hr>
                                             <div className="d-flex" style={{justifyContent:"flex-end"}}>
                                                         <button className="btn btn-outline-danger butns" onClick={()=>VerifyUser("decline",e._id,e.email)}>Decline</button>

@@ -121,7 +121,7 @@ const PostEvent = () => {
                                     </div>
                                     <div className="col-sm-12">
                                          <div className="form-group">
-                                             <label for="uname">Event Discription</label>
+                                             <label for="uname">Event Description</label>
                                             <textarea className="form-control" value={data.Dis} onChange={HandleChange}   rows="10" cols="50" style={{background:"white"}} id="uname" placeholder="Enter Discription" name="Dis" required/>
                                          </div>
 

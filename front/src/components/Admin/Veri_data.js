@@ -40,7 +40,7 @@ const Veri_data = (props) => {
         {title:'Date of Birth',field:'dob'},
         {title:'Gender',field:'gender'},
         {title:'Address',field:'add'},
-        {title:'Assocaition with college',field:'association'},
+        {title:'Association with college',field:'association'},
         {title:'Department',field:'dept'},
         {title:'Year of Passing',field:'passingYear'},
         {title:'Organisation',field:'organisation'},

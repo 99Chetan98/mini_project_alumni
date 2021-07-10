@@ -34,6 +34,9 @@ import News from './components/News';
 import AllEve from './components/AllEvents';
 import IndiEvents from './components/IndiEvents';
 import Declined from './components/Declined';
+import UseEvents from  './components/Login/Events';
+import UserNews from './components/Login/UserNews';
+import UserIndEvents from './components/Login/UserIndEvents';
 const App=()=>{
     
   return(
@@ -154,6 +157,17 @@ const App=()=>{
             
             <Route exact path="/UserDash/Declined">
                 <Declined/>
+            </Route>
+   
+            <Route exact path="/UserDash/PastEvents">
+                <UseEvents/>
+            </Route>
+            <Route exact path="/UserDash/News">
+                <UserNews/>
+            </Route>
+            
+            <Route exact path="/UserDash/EventInformation/:id">
+                <UserIndEvents/>
             </Route>
     </>
     

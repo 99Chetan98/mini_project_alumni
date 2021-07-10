@@ -192,8 +192,9 @@ app.post("/put_con/:id",async(req,res)=>{
     const upda=await User.updateOne({_id},{$set:{conreq:conre}});
 
     const requser=await User.findOne({_id:reqid});
-    const matre=requser.conreq.concat({reqc:_id,status:1});;
-    const updat=await User.updateOne({_id:reqid},{$set:{conreq:matre}});
+    const matre=requser.conreq.concat({reqc:_id,status:1});
+    const Notify=requser.Notifications.concat({about:"connect",data:{user:_id,username:data.name}});
+    const updat=await User.updateOne({_id:reqid},{$set:{conreq:matre,Notifications:Notify}});
 
     if(updat && upda){
         res.status(200);
@@ -205,12 +206,17 @@ app.post("/bemates",async(req,res)=>{
     const mateid=req.body.mateid;
 
     const userdata=await User.findOne({_id:userid});
-
-    const updateU=await User.updateOne({_id:userid,"conreq.reqc":mateid},{$set:{"conreq.$.status":2}});
-
-
     const matedata=await User.findOne({_id:mateid});
-    const updateM=await User.updateOne({_id:mateid,"conreq.reqc":userid},{$set:{"conreq.$.status":2}});
+
+    const NotifyMe=userdata.Notifications.concat({about:"Accepted",data:{user:mateid,username:matedata.name}});
+    const NotifyUser=matedata.Notifications.concat({about:"Accepted",data:{user:userid,username:userdata.name}});
+
+
+    const updateU=await User.updateOne({_id:userid,"conreq.reqc":mateid},{$set:{"conreq.$.status":2},Notifications:NotifyMe});
+
+
+   
+    const updateM=await User.updateOne({_id:mateid,"conreq.reqc":userid},{$set:{"conreq.$.status":2},Notifications:NotifyUser});
 
     if(updateU && updateM){
         res.status(200);
@@ -315,6 +321,7 @@ app.get("/matereq/:id",(req,res)=>{
 app.post("/send_email",(req,res)=>{
     var email=req.body.email;
     var number=Math.floor(Math.random()*(9999-1000))+1;
+    try{
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -334,7 +341,7 @@ app.post("/send_email",(req,res)=>{
         if (error) {
           res.send(error);
         } else {
-            try{
+           
                 
                 const verify=new Email_data({
                     email:email,
@@ -348,13 +355,15 @@ app.post("/send_email",(req,res)=>{
                 res.status(201);
                 
               console.log('Email sent: ' + info.response);
-            }
-            catch(e){
-                console.log(e)
-            }
+            
+
             
         }
       });
+    }
+    catch(e){
+        console.log(e)
+    }
 })
 app.post("/Verify_OTP",async(req,res)=>{
         const {email,code}=req.body;

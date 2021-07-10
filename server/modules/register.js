@@ -94,6 +94,27 @@ const regi_schema=new mongoose.Schema({
                 type:String
             }
         }
+    ],
+    Notifications:[
+        {
+
+           time:{
+               type:Date,
+               default:Date.now()
+           },
+           about:{
+               type:String
+           },
+           data:{
+               user:{
+                   type:String
+               },
+               username:{
+                   type:String
+               }
+           }
+
+        }
     ]
 
 

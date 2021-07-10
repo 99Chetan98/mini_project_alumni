@@ -7,7 +7,7 @@ import  Mates from './Mates';
 export const Usercontext=createContext();
 
 
-function UserHome() {
+function Events() {
     const [user,setuser]=useState([]);
     const history=useHistory();
   const checklogged=async()=>{
@@ -84,13 +84,13 @@ function UserHome() {
                 Event.map((e)=>{
                     const str=e.date;
                     var arr=str.split("-");
-                    if(Number(arr[2])>=Number(today.getDate()) && Number(arr[1])>=Number(today.getMonth() + 1) && Number(arr[0])>=Number(today.getFullYear())){
+                    if(Number(arr[2])<=Number(today.getDate()) && Number(arr[1])<=Number(today.getMonth() + 1) && Number(arr[0])<=Number(today.getFullYear())){
 
                  
 
                     return(
                         <div className="EventBox" >
-                                <h3  onClick={()=>history.push(`/UserDash/EventInformation/${e._id}`)}><i class="fa fa-calendar" aria-hidden="true"></i> {e.heading}</h3>
+                                <h3 onClick={()=>history.push(`/EventInformation/${e._id}`)}><i class="fa fa-calendar" aria-hidden="true"></i> {e.heading}</h3>
                                 <h6 >Date: {arr[2]} {year[arr[1]]} {arr[0]} | Time: {e.time}</h6>
                                 <hr></hr>
                                 <h4  id="news-dis">{e.discription}</h4>
@@ -103,9 +103,9 @@ function UserHome() {
             </div>
             <div className="ulbox">
                                 <ul>
-                                <NavLink to="/UserDash" activeClassName="getact"> <li className="activo">Upcoming Events</li></NavLink> 
+                                <NavLink to="/UserDash" activeClassName="getact"> <li>Upcoming Events</li></NavLink> 
                                 <hr style={{margin:"0px"}}></hr>
-                                <NavLink to="/UserDash/PastEvents" activeClassName="getact"> <li>Past Events</li></NavLink> 
+                                <NavLink to="/UserDash/PastEvents" activeClassName="getact"> <li  className="activo">Past Events</li></NavLink> 
                                     <hr style={{margin:"0px"}}></hr>
                                     <NavLink to="/UserDash/News" activeClassName="getact"><li >News</li></NavLink>
                                     
@@ -118,4 +118,4 @@ function UserHome() {
     )
 }
 
-export default UserHome
+export default Events

@@ -145,7 +145,7 @@ app.post("/find_batchmate",(req,res)=>{
       
   no=req.body.no;
     User.find()
-    .select("_id name dept passingYear")
+    .select("_id name profile_pic dept passingYear")
     .then(user=>{
         res.json({user})
     }).catch(e=>{
@@ -169,7 +169,7 @@ app.get("/find/:matid/:userid",async(req,res)=>{
 
    
         User.findOne({_id})
-        .select("_id name organisation areaofexpert dept passingYear")
+        .select("_id name organisation profile_pic areaofexpert dept passingYear")
         .then(user=>{
             res.send(user);
         })
@@ -502,6 +502,21 @@ app.post("/PostEvent",async(req,res)=>{
         });
 
         const post=await post_event.save();
+
+        const notifyall=await User.updateMany({
+            
+        }, {
+          $push: {
+              "Notifications": {
+                about:"event",
+                data:{
+                    user:"event",
+                    username:Heading
+                }
+              }
+          }
+        })
+
         if(post){
             res.status(201).json({"msg":"posted"});
         }
@@ -529,8 +544,22 @@ app.post("/PostNews",async(req,res)=>{
             discription:Dis
 
         });
-
         const post=await post_event.save();
+        const notifyall=await User.updateMany({
+            
+        }, {
+          $push: {
+              "Notifications": {
+                about:"news",
+                data:{
+                    user:"news",
+                    username:Heading
+                }
+              }
+          }
+        })
+
+
         if(post){
             res.status(201).json({"msg":"posted"});
         }

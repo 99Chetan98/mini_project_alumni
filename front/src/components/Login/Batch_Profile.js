@@ -4,11 +4,12 @@ import {useEffect,useState} from 'react';
 import {useHistory,useLocation} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import img from '../../img/top.jpg';
-import { compareSync } from 'bcryptjs';
+
 import Loader from './Loader';
 const Batch_Profile = () => {
 
     const [sta,setsta]=useState("");
+    const [pp,setpp]=useState([]);
     const [userdata,setuserdata]=useState([]);
     const finbatch=async()=>{
         try{
@@ -22,7 +23,8 @@ const Batch_Profile = () => {
                
             });
             const data=await res.json();
-            setuserdata(data);         
+            setuserdata(data);     
+            
         }catch(e){
             console.log(e);
             history.push('/Login');
@@ -90,6 +92,7 @@ console.log(rstat)
             });
             const data=await res.json();
             setuser(data);
+            setpp(data.profile_pic);   
 
 
                    
@@ -110,8 +113,28 @@ console.log(rstat)
 
 
     },[name,stat]);
-    
+    const [imge,setimge]=useState(require(`../../img/default.jpeg`).default);
+    useEffect(() => {
+       if(typeof(pp)!=='undefined'){
+           var ar=pp[pp.length-1];
+         
+           if(typeof(ar)!=='undefined'){
+            setimge(require(`../Pictures/${ar.pic_name}`).default);
+           }
+           
+           
+        //    if(ar.pic_name!=='undefined'){
+        //     //    var pic=ar.pic_name;
+        //     //    setimge(require(`../Pictures/${pic}`).default);
+        //    }
+       }
+       else{
+        console.log('undefined joined');
+       }
 
+    }, [pp])
+  
+   
 const [tr,settr]=useState("");
 
     const beMate=(sta)=>{
@@ -173,7 +196,7 @@ const [tr,settr]=useState("");
                     <div className="row ">
                     <div className="col-md-6 col-sm-4 ">
                     <div className="d-flex justify-content-center " style={{top:"-50px",position:"relative"}}> 
-                    <img src={img} alt="" id="profile_pic"/>
+                    <img src={imge} alt="" id="profile_pic"/>
                     
                     </div>  
                     

@@ -7,6 +7,7 @@ import { compareSync } from 'bcryptjs';
 const ConReq = (props) => {
     const history=useHistory();
     const [user, setuser] = useState([]);
+   
     const [userdata,setuserdata]=useState([]);
     const [Ope,setOpe]=useState({
         text:"",
@@ -25,7 +26,8 @@ const ConReq = (props) => {
                    
                 // });
                 // const data=await res.json();
-                setuserdata(props.user);         
+                setuserdata(props.user);     
+               
             
            
             if(props.opid==1){
@@ -60,7 +62,7 @@ const ConReq = (props) => {
             finbatch();
            
     },[])
-
+    const [pp,setpp]=useState([]);
     console.log(userdata);
     useEffect(async() => {
 
@@ -76,6 +78,8 @@ const ConReq = (props) => {
             });
             const data=await res.json();
             setuser(data);
+            setpp(data.profile_pic);
+          
 
                    
         }catch(e){
@@ -83,7 +87,26 @@ const ConReq = (props) => {
            
         }
     },[]);
-    
+    const [imge,setimge]=useState(require(`../../img/default.jpeg`).default);
+    useEffect(() => {
+       if(typeof(pp)!=='undefined'){
+           var ar=pp[pp.length-1];
+         
+           if(typeof(ar)!=='undefined'){
+            setimge(require(`../Pictures/${ar.pic_name}`).default);
+           }
+           
+           
+        //    if(ar.pic_name!=='undefined'){
+        //     //    var pic=ar.pic_name;
+        //     //    setimge(require(`../Pictures/${pic}`).default);
+        //    }
+       }
+       else{
+        console.log('undefined joined');
+       }
+
+    }, [pp])
     const Bemate=(id,uid)=>{
         if(id==0){
             
@@ -117,7 +140,7 @@ const ConReq = (props) => {
                
 
                 
-                                       <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
+                                       <div className="d-flex justify-content-center"> <img src={imge} style={{height:"100px",width:"100px"}}/></div>
                                         <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${user._id}&status=${userdata._id}`);}}>{user.name}</h4>
                                         <h6>{user.dept} | {user.passingYear}</h6>
                                         

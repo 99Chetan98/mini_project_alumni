@@ -16,6 +16,7 @@ const BatchConn = () => {
 
             
     );
+    const [pp,setpp]=useState(img);
     const [mate,setmate]=useState([]);
     const [arr,setarr]=useState([]);
     const [limit,setlimit]=useState(18);
@@ -65,6 +66,7 @@ const BatchConn = () => {
             .then(results=>{
                 setcondata(results.user);
                 setmate(userdata.matereq)
+                
              
               
                     setarr(userdata.conreq);
@@ -74,6 +76,7 @@ const BatchConn = () => {
 
         },[userdata,limit])
 
+ 
         
        const ToConnect=(id)=>{
         setsent([...sent,id]);
@@ -149,8 +152,8 @@ const BatchConn = () => {
 
         }
 
-     
-    
+        var arr2=[];
+        var imgdata=[];
     return (
         <div>
                     <Header/>
@@ -161,7 +164,21 @@ const BatchConn = () => {
 
                         {
                             condata.map((e,key)=>{
-                                var text="connect"
+                                var text="connect";
+                                
+                                arr2=e.profile_pic;
+                                if(typeof(arr2) !== 'undefined' && arr2!==null){
+                                  
+                                    if(typeof(e.profile_pic.pic_name)=== 'undefined'){
+                                        imgdata=e.profile_pic[arr2.length-1];
+                                        if(typeof imgdata!=='undefined'){
+                                            var iamgename=imgdata.pic_name;
+                                        }
+                                       
+                                    }
+                                }
+                                
+                               
                                 for(let i in arr)
                                 {
                                         if(e._id===arr[i].reqc){
@@ -184,12 +201,12 @@ const BatchConn = () => {
                                     return(
                                              <>   
                                         <div key={key} className="col-md-3 col-sm-2">
-                                       <div className="d-flex justify-content-center"> <img src={img} style={{height:"100px",width:"100px"}}/></div>
+                                       <div className="d-flex justify-content-center"> <img src={typeof(imgdata)!=='undefined'?require(`../Pictures/${iamgename}`).default:require(`../../img/default.jpeg`).default} style={{height:"100px",width:"100px"}}/></div>
                                         <h4 onClick={()=>{ history.push(`/UserDash/Batch_Profile?uid=${e._id}`);}}>{e.name}</h4>
                                         <h6>{e.dept} | {e.passingYear}</h6>
                                         <div className="d-flex justify-content-center"><button type="button" className="btn btn-primary" onClick={()=>ToConnect(e._id)} disabled={tru}>{text}</button></div>
                                          </div>
-                                            {/* //onClick={()=>ToConnect(e._id,key)}// */}
+                                            {/* //onClick={()=>ToConnect(e._id,key)}//` */}
                                          </>
                                     )
                                         

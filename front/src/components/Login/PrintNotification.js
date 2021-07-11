@@ -29,6 +29,18 @@ const PrintNotification = (props) => {
      var id=props.data.data.user;
      var path=`/UserDash/Mate_profile?user_req=${id}`;
    }
+   else  if(props.data.about=='news'){
+    var about="New news added,tap to view news";
+    var username="";
+    var id="";
+    var path=`/UserDash/News`;
+  }
+  else  if(props.data.about=='event'){
+    var about="New Event added,tap to view event";
+    var username="";
+    var id="";
+    var path=`/UserDash`;
+  }
     
 
     return (
